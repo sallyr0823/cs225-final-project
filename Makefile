@@ -34,11 +34,12 @@ file_reader.o: file_reader.cpp
 	$(CXX) $(CXXFLAGS) file_reader.cpp
 
 
-test: output_msg  tests/tests.cpp file_reader.cpp
-	$(LD)  tests/tests.cpp file_reader.cpp $(LDFLAGS) -o test
+test: output_msg tests/catch/catchmain.cpp tests/tests.cpp readFromFile.cpp
+	$(LD) tests/catch/catchmain.cpp tests/tests.cpp readFromFile.cpp $(LDFLAGS) -o test
 
-tests.o: tests/tests.cpp  file_reader.cpp
+tests.o: tests/tests.cpp tests/catch/catch.hpp readFromFile.cpp
 	$(CXX) $(CXXFLAGS) tests/tests.cpp
+
 
 # Standard C++ Makefile rules:
 clean:
