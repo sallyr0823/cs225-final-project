@@ -38,6 +38,15 @@ void Graph::insertVertex(int v, Airport ap)
 //takes airport.dat and insert each airport into the class line by line
 void Graph::insertAllVertices(std::string & filesName)
 {
+    std::vector<std::vector<std::string >> airport = file_to_vector(filesName);
+    
+    /*for(unsigned i = 0; i < airport.size(); i++) {
+        //unsigned ID, std::string name, std::string IATA, double latitude, double longitude, std::string city, std::string country
+        Airport ap(std::stoul(airport[i][0]),airport[i][1],airport[i][4],
+        std::stod(airport[i][6]),std::stod(airport[i][7]),airport[i][2],airport[i][3])
+    }*/
+
+
     std::fstream file;
     //open the file
     file.open(filesName, ios::in);
@@ -55,8 +64,9 @@ void Graph::insertAllVertices(std::string & filesName)
             }
             if(comma == 13){
                 //create and insert an airport object from current line in file
-                Airport ap(currLine);
-                insertVertex(ap.getAirportID(), ap);
+                //Airport ap(currLine);
+
+                //insertVertex(currLine, ap);
             }
         }
         file.close(); 

@@ -6,7 +6,7 @@ using namespace std;
 
 int main()
 {
-    vector<int> a;
-    cout << "a" << 1 << endl;
+    vector<vector<string >> airport = file_to_vector("dataset/airports.dat.txt");
+    cout << airport.size() << endl;
     return 0;
 }
