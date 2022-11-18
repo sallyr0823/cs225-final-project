@@ -1,4 +1,5 @@
 #include "airport.h"
+using namespace std;
 
 Airport::Airport() {}
 
@@ -14,7 +15,9 @@ Airport::Airport(unsigned ID, std::string name, std::string IATA, double latitud
     airport_name = name;
     airport_ID = ID;
     airport_IATA = IATA;
-    airport_position = std::make_pair(latitude, longitude);
+
+
+    //airport_position = std::make_pair(latitude, longitude);
     airport_location = std::make_pair(city, country);
 }
 
@@ -30,7 +33,7 @@ std::string Airport::AirportName() const {
     return airport_name;
 }
 
-unsigned Airport::AirportID() const {
+string Airport::AirportID() const {
     return airport_ID;
 }
 
