@@ -52,6 +52,30 @@ Graph::Graph(vector<Airport> & airports, vector<Edge> & edges) {
     }
 }
 
+Graph::Graph(const Graph& other) {
+    if(this == &other) {
+        return;
+    }
+    num_ = other.num_;
+    airports_ = other.airports_;
+    edges_ = other.edges_;
+    adjmatrix_ = new bool*[num_];
+
+    for (int i = 0; i < num_; i++) {
+        adjmatrix_[i] = new bool[num_];
+        for (int j = 0; j < num_; j++) {
+            adjmatrix_[i][j] = other.adjmatrix_[i][j];
+        }
+    }
+}
+
+Graph::~Graph() {
+    for(int i = 0; i < num_; i++) {
+        delete adjmatrix_[];
+    }
+    delete adjmatrix_[];
+}
+
 int Graph::get_num_airports() {
     return num_;
 }
@@ -77,9 +101,10 @@ vector<Airport> Graph::get_adj_airport(Airport airport) {
                  if (adjmatrix_[index][i]) {
                 adj.push_back(airports_[i]);
             }
-            }
         }
-    }
+     }
+}
+
 
 bool Graph::exist_airport(Airport airport) {
     for (size_t i = 0; i < airports_.size(); i++) {
@@ -88,4 +113,16 @@ bool Graph::exist_airport(Airport airport) {
         }
     }
     return false;
+}
+
+Edge Graph::getEdge(Airport source, Airport destination) {
+    if(!exist_airport(source) || !exist_airport(destination)) {
+        return Edge();
+    }
+    vector<Airport> adj = get_adj_airport(source);
+    if(find(adj.begin(),adj.end(),destination) != adj.end()) {
+        return(Edge(source.AirportID(),destination.AirportID(),calculateWeight(source, destination));
+    }
+    return Edge();
+    
 }

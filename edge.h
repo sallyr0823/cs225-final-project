@@ -2,6 +2,7 @@
 
 #include <string>
 #include <limits.h>
+#include "airport.h"
 
 using std::string;
 class Edge {
@@ -15,8 +16,9 @@ class Edge {
 
         //get 
         string getSourceId();       
-        string getDestId();         
+        string getDestId();     
         double getWeight();
+        double calculateWeight(Airport source, Airport destination);
        
         //set
         void setWeight(double w);
@@ -27,6 +29,9 @@ class Edge {
         bool operator<(const Flight& other) const;
         bool operator==(Flight& other) const;
     
+        //std::pair<double, double> AirportLocation() const;
+        
+        
     private:
         //source airport IATA
         string source;

@@ -20,8 +20,8 @@ class Graph {
         vector<Airport> & get_airports();
         vector<Edge> & get_routes();
         vector<Airport> get_adj_airport(Airport airport);
+        Edge getEdge(Airport source, Airport destination);
         bool exist_airport(Airport airport);
-        void print_adj_matrix();
 
     private:
     int num_;
