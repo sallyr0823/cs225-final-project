@@ -2,7 +2,7 @@
 # Execuate Name
 EXENAME = main
 # Add standard CS 225 object files
-OBJS = file_reader.o main.o
+OBJS = file_reader.o main.o airport_graph.o edge.o airport.o 
 
 # Compiler/linker comfig and object/depfile directory:
 CXX = clang++
@@ -33,11 +33,20 @@ main.o: main.cpp file_reader.cpp
 file_reader.o: file_reader.cpp
 	$(CXX) $(CXXFLAGS) file_reader.cpp
 
+airport_graph.o: airport_graph.cpp
+	$(CXX) $(CXXFLAGS) airport_graph.cpp
+
+edge.o: edge.cpp
+	$(CXX) $(CXXFLAGS) edge.cpp
+
+airport.o: airport.cpp
+	$(CXX) $(CXXFLAGS) airport.cpp
+
 
 test: output_msg tests/catch/catchmain.cpp tests/tests.cpp readFromFile.cpp
 	$(LD) tests/catch/catchmain.cpp tests/tests.cpp readFromFile.cpp $(LDFLAGS) -o test
 
-tests.o: tests/tests.cpp tests/catch/catch.hpp readFromFile.cpp
+tests.o: tests/tests.cpp tests/catch/catch.hpp file_reader.cpp airport_graph.cpp edge.cpp airport.cpp 
 	$(CXX) $(CXXFLAGS) tests/tests.cpp
 
 
