@@ -3,6 +3,7 @@
 #include <vector>
 #include <string>
 #include <unordered_map>
+#include <map>
 #include "Airport.h"
 #include "file_reader.h"
 #include "edge.h"
@@ -22,11 +23,13 @@ class Graph {
         vector<Airport> get_adj_airport(Airport airport);
         Edge getEdge(Airport source, Airport destination);
         bool exist_airport(Airport airport);
+        vector<Airport> traversal(Airport & source, Airport & destination);
 
     private:
     int num_;
     vector<Airport> airports_;
     vector<Edge> edges_;
     bool** adjmatrix_;
+    unordered_map<Airport, map<Edge, Airport > > graph_;
   
 };

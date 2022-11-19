@@ -4,10 +4,13 @@
 #include <math.h> 
 #include <vector>
 #include <string>
+#include <utility>
 #include <unordered_map>
+#include <map>
 #include <iostream>
 #include <sstream>
 #include <fstream>
+#include <queue>
 
 
 using namespace std;
@@ -48,7 +51,16 @@ Graph::Graph(vector<Airport> & airports, vector<Edge> & edges) {
             adjmatrix_[s_index][d_index] = true;
             adjmatrix_[d_index][s_index] = true;
         }
+    }
 
+    for(int i = 0; i < num_; i++) {
+        vector<Airport> adj = get_adj_airport(airports_[i]);
+        map<Edge, Airport> adj_map;
+        for(int j = 0; j < adj.size(); j++) {
+            adj_map.insert({getEdge(airports_[i],adj[j]),adj[j]});
+        }
+        graph_.insert(make_pair(airports_[i],adj_map));
+        
     }
 }
 
@@ -67,6 +79,7 @@ Graph::Graph(const Graph& other) {
             adjmatrix_[i][j] = other.adjmatrix_[i][j];
         }
     }
+    graph_ = other.graph_;
 }
 
 Graph::~Graph() {
@@ -125,4 +138,9 @@ Edge Graph::getEdge(Airport source, Airport destination) {
     }
     return Edge();
     
+}
+
+vector<Airport> Graph::traversal(Airport & source, Airport & destination) {
+    
+
 }
