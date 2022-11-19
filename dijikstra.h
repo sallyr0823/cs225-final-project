@@ -12,6 +12,7 @@ using namespace std;
 class Dijisktra {
 
     public:
+    Dijisktra(Graph graph, Airport source);
     vector<Airport> shortest_path(Airport destination);
     double shortest_distance(Airport destination);
     private:
