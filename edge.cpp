@@ -6,26 +6,24 @@
 
 
 Edge::edge(){
-    source = "";
-    destination = ""; 
-    weight = 0;
+    
 };
-Edge::Edge(string s, string d){
-    source = s;
-    destination = d; 
-    weight = 0;
+Edge::Edge(Airport s, Airport d){
+    source = Airport(s);
+    destination = Airport(d); 
+    weight = calculateWeight(s,d);
 };
 
-Edge::Edge(string s, string d, double w){
-    source = s;
-    destination = d; 
+Edge::Edge(Airport s, Airport d, double w){
+    source = Airport(s);
+    destination = Airport(d); 
     weight = w;
 };
 string Edge::getSourceId() {
-    return source;
+    return source.AirportID();
 }
 string Edge::getDestId() {
-    return destination;
+    return destination.AirportID();
 }
 double Edge::calculateWeight(Airport source, Airport destination) {
     // consider source to be class object
@@ -50,14 +48,24 @@ double Edge::getWeight() {
 void Edge::setWeight(double w) {
     weight = w;
 }
-
-void Edge::setSource(double s) {
-    source = s;
+string Edge::getSourceName() {
+    return source.AirportName();
 }
-void Edge::setDestination(double d) {
-    destination = d; 
+string Edge::getDestName() {
+    return destination.AirportName();
 }
-
+string Edge::getSourceIATA() {
+    return source.AirportIATA();
+}
+string Edge::getDestIATA() {
+    return destination.AirportIATA();
+}
+void Edge::setSource(Airport s) {
+    source = Airport(s);
+}
+void Edge::setDestination(Airport d) {
+    destination = Airport(d); 
+}
 
 
 bool Edge::operator<(const Edge& other) const {
