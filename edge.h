@@ -15,8 +15,10 @@ class Edge {
         Edge(Airport s, Airport d, double w);
 
         //get 
+
         unsigned getSourceId();       
         unsigned getDestId();    
+
         string getSourceName();
         string getDestName();
         string getSourceIATA();

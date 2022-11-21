@@ -1,6 +1,7 @@
 //Graphs Class
 
 #include "airport_graph.h"
+#include "edge.h"
 #include <math.h> 
 #include <vector>
 #include <string>
@@ -25,42 +26,16 @@ Graph::Graph(vector<Airport> & airports, vector<Edge> & edges) {
     airports_ = airports;
     edges_ = edges;
     num_ = airports.size();
-    for(int i = 0; i < num_ ; i++) {
-        adjmatrix_[i] = new bool[num_];
-        visited_[i] = false;
-        for(int j = 0; j < num_;j++) {
-            adjmatrix_[i][j] = false;
-        }
+    visited_ = vector<bool>(num_, false);
+    
+    for(int i = 0; i < num_;i++) {
+        vector<unsigned> insert;
+        adjlist_.insert({airports_[i].AirportID(),insert});
     }
-
-    for(int j = 0; j < edges_.size(); j++) {
-        unsigned source = edges[j].getSourceId();
-        unsigned des = edges[j].getDestId();
-        // airport class use unsigned
-        // edge class use string 
-        int s_index = num_;
-        int d_index = num_;
-        for(int k = 0; k < num_; k++) {
-            if(airports[k].AirportID() == source) {
-                s_index = k;
-            }
-            if(airports[k].AirportID() == des) {
-                d_index = k;
-            }
-        }
-        if(s_index != num_ && d_index != num_) {
-            adjmatrix_[s_index][d_index] = true;
-            adjmatrix_[d_index][s_index] = true;
-        }
-    }
-    for(int i = 0; i < num_; i++) {
-        vector<Airport> adj = get_adj_airport(airports_[i]);
-        map<Edge, Airport> adj_map;
-        for(int j = 0; j < adj.size(); j++) {
-            adj_map.insert({getEdge(airports_[i],adj[j]),adj[j]});
-        }
-        graph_.insert(make_pair(airports_[i],adj_map));
-        
+    for(int j = 0; j < edges_.size();j++) {
+        unsigned source = edges_[j].getSourceId();
+        unsigned dest = edges_[j].getDestId();
+        adjlist_[source].push_back(dest);
     }
 }
 
@@ -71,23 +46,10 @@ Graph::Graph(const Graph& other) {
     num_ = other.num_;
     airports_ = other.airports_;
     edges_ = other.edges_;
-    adjmatrix_ = new bool*[num_];
-
-    for (int i = 0; i < num_; i++) {
-        adjmatrix_[i] = new bool[num_];
-        for (int j = 0; j < num_; j++) {
-            adjmatrix_[i][j] = other.adjmatrix_[i][j];
-        }
-    }
-    graph_ = other.graph_;
+    adjlist_ = other.adjlist_;
+    visited_ = visited_;
 }
 
-Graph::~Graph() {
-    for(int i = 0; i < num_; i++) {
-        delete adjmatrix_[];
-    }
-    delete adjmatrix_[];
-}
 
 int Graph::get_num_airports() {
     return num_;
@@ -101,59 +63,65 @@ vector<Edge> & Graph::get_routes() {
     return edges_;
 }
 
-
-
-
-vector<Airport> Graph::get_adj_airport(Airport airport) {
-    vector<Airport> adj;
+vector<unsigned> Graph::get_adj_airport(unsigned airportId) {
    
-    if(exist_airport(airport)) {
+    if(exist_airport(airportId)) {
         // check if contains airport
-        auto index = find(airports_.begin(),airports_.end(),airport);
-            for(int i = 0; i < num_; i++) {
-                 if (adjmatrix_[index][i]) {
-                adj.push_back(airports_[i]);
-            }
-        }
+        return adjlist_[airportId];
      }
+     return vector<unsigned>();
 }
 
 
-bool Graph::exist_airport(Airport airport) {
-    for (size_t i = 0; i < airports_.size(); i++) {
-        if (airport == airports_[i]) {
+bool Graph::exist_airport(unsigned airportId) {
+    for (size_t i = 0; i < num_; i++) {
+        if (airportId == airports_[i].AirportID()) {
             return true;
         }
     }
     return false;
 }
 
-Edge Graph::getEdge(Airport source, Airport destination) {
+Edge Graph::getEdge(unsigned source, unsigned destination) {
     if(!exist_airport(source) || !exist_airport(destination)) {
         return Edge();
     }
-    vector<Airport> adj = get_adj_airport(source);
-    if(find(adj.begin(),adj.end(),destination) != adj.end()) {
-        return(Edge(source.AirportID(),destination.AirportID(),calculateWeight(source, destination)));
+    vector<unsigned> adj = get_adj_airport(source);
+    if(find(adj.begin(),adj.end(),destination) != adj.end()) { 
+        Airport s;
+        Airport d;
+        for(int i = 0; i < num_; i++) {
+            if(source == airports_[i].AirportID()) {
+                s = airports_[i];
+            }
+            if(destination == airports_[i].AirportID()) {
+                d = airports_[i];
+            }
+            if(s.AirportID() != 0 && d.AirportID() != 0) {
+                break;
+            }
+        }
+        return Edge(s,d);
     }
     return Edge();
     
 }
-
-vector<Airport> Graph::traversal(Airport & source, Airport & destination) {
-    queue<Airport> q;
-    vector<Airport> trav;
-    q.push(source);
-    while(!q.empty()) {
-        Airport curr = q.front();
-        visited_[curr.AirportID()] = true;
+//BFS traversal
+vector<unsigned> Graph::traversal(Airport & source, Airport & destination) {
+    unsigned dest = destination.AirportID();
+    queue<unsigned> q;
+    vector<unsigned> trav;
+    q.push(source.AirportID());
+    while(!q.empty() && q.front() != dest) {
+        unsigned curr = q.front();
+        visited_[curr] = true;
         q.pop();
         trav.push_back(curr);
-        for(Airport& adj: get_adj_airport(source)) {
-            if(!visited_[adj.AirportID()]) {
+        for(unsigned& adj: get_adj_airport(curr)) {
+            if(!visited_[adj]) {
                 q.push(adj);
                 trav.push_back(adj);
-                visited_[adj.AirportID()] = true;
+                visited_[adj] = true;
             }
         }
     }

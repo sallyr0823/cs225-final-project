@@ -17,8 +17,10 @@ Edge::Edge(Airport s, Airport d){
 Edge::Edge(Airport s, Airport d, double w){
     source = Airport(s);
     destination = Airport(d); 
-    weight = w;
+    weight = calculateWeight(s,d)
 };
+
+
 unsigned Edge::getSourceId() {
     return source.AirportID();
 }
