@@ -32,7 +32,7 @@ Graph::Graph(vector<Airport> & airports, vector<Edge> & edges) {
         vector<unsigned> insert;
         adjlist_.insert({airports_[i].AirportID(),insert});
     }
-    for(int j = 0; j < edges_.size();j++) {
+    for(unsigned j = 0; j < edges_.size();j++) {
         unsigned source = edges_[j].getSourceId();
         unsigned dest = edges_[j].getDestId();
         adjlist_[source].push_back(dest);
@@ -47,7 +47,7 @@ Graph::Graph(const Graph& other) {
     airports_ = other.airports_;
     edges_ = other.edges_;
     adjlist_ = other.adjlist_;
-    visited_ = visited_;
+    visited_ = other.visited_;
 }
 
 
@@ -74,7 +74,7 @@ vector<unsigned> Graph::get_adj_airport(unsigned airportId) {
 
 
 bool Graph::exist_airport(unsigned airportId) {
-    for (size_t i = 0; i < num_; i++) {
+    for (int i = 0; i < num_; i++) {
         if (airportId == airports_[i].AirportID()) {
             return true;
         }
@@ -125,5 +125,6 @@ vector<unsigned> Graph::traversal(Airport & source, Airport & destination) {
             }
         }
     }
+    return trav;
 
 }

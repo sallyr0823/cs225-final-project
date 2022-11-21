@@ -17,7 +17,7 @@ Edge::Edge(Airport s, Airport d){
 Edge::Edge(Airport s, Airport d, double w){
     source = Airport(s);
     destination = Airport(d); 
-    weight = calculateWeight(s,d)
+    weight = calculateWeight(s,d);
 };
 
 
