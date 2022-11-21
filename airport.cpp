@@ -33,7 +33,7 @@ std::string Airport::AirportName() const {
     return airport_name;
 }
 
-string Airport::AirportID() const {
+unsigned Airport::AirportID() const {
     return airport_ID;
 }
 

@@ -4,7 +4,7 @@
 #include <string>
 #include <unordered_map>
 #include <map>
-#include "Airport.h"
+#include "airport.h"
 #include "file_reader.h"
 #include "edge.h"
 
@@ -30,6 +30,7 @@ class Graph {
     vector<Airport> airports_;
     vector<Edge> edges_;
     bool** adjmatrix_;
-    unordered_map<Airport, map<Edge, Airport > > graph_;
+    unordered_map<Airport, unordered_map<Edge, Airport > > graph_;
+    vector<bool> visited_;
   
 };

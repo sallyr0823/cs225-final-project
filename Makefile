@@ -21,25 +21,25 @@ $(EXENAME): output_msg $(OBJS)
 	$(LD) $(OBJS) $(LDFLAGS) -o $(EXENAME)
 
 
-main.o: main.cpp file_reader.h
+main.o: main.cpp file_reader.h airport_graph.h edge.h airport.h
 	$(CXX) $(CXXFLAGS)  main.cpp
 
-file_reader.o: file_reader.cpp
+file_reader.o: file_reader.cpp file_reader.h
 	$(CXX) $(CXXFLAGS) file_reader.cpp
 
-airport_graph.o: airport_graph.cpp
+airport_graph.o: airport_graph.cpp airport_graph.h
 	$(CXX) $(CXXFLAGS) airport_graph.cpp
 
-edge.o: edge.cpp
+edge.o: edge.cpp edge.h
 	$(CXX) $(CXXFLAGS) edge.cpp
 
-airport.o: airport.cpp
+airport.o: airport.cpp airport.h
 	$(CXX) $(CXXFLAGS) airport.cpp
 
 test: output_msg tests/catch/catchmain.cpp tests/tests.cpp file_reader.cpp
 	$(LD) tests/catch/catchmain.cpp tests/tests.cpp file_reader.cpp $(LDFLAGS) -o test
 
-tests.o: tests/tests.cpp tests/catch/catch.hpp file_reader.cpp airport_graph.cpp edge.cpp airport.cpp 
+tests.o: tests/tests.cpp tests/catch/catch.hpp file_reader.cpp 
 	$(CXX) $(CXXFLAGS) tests/tests.cpp
 
 clean:

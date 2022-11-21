@@ -10,33 +10,38 @@ class Edge {
         //default constructor
         Edge();
         //constructor without given weight
-        Edge(string s, string d);
+        Edge(Airport s, Airport d);
         //constructor with everything
-        Edge(string s, string d, double w);
+        Edge(Airport s, Airport d, double w);
 
         //get 
-        string getSourceId();       
-        string getDestId();     
+        unsigned getSourceId();       
+        unsigned getDestId();    
+        string getSourceName();
+        string getDestName();
+        string getSourceIATA();
+        string getDestIATA();
         double getWeight();
+
         double calculateWeight(Airport source, Airport destination);
-       
+
         //set
         void setWeight(double w);
-        void setSource(double s);
-        void setDestination(double d); 
+        void setSource(Airport s);
+        void setDestination(Airport d); 
 
         //operator overloading
-        bool operator<(const Flight& other) const;
-        bool operator==(Flight& other) const;
+        bool operator<(const Edge& other) const;
+        bool operator==(Edge& other) const;
     
         //std::pair<double, double> AirportLocation() const;
         
         
     private:
         //source airport IATA
-        string source;
+        Airport source;
         //destination airport IATA
-        string destination;
+        Airport destination;
         //distances in KM between two airports
         double weight;
 };

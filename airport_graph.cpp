@@ -27,14 +27,15 @@ Graph::Graph(vector<Airport> & airports, vector<Edge> & edges) {
     num_ = airports.size();
     for(int i = 0; i < num_ ; i++) {
         adjmatrix_[i] = new bool[num_];
+        visited_[i] = false;
         for(int j = 0; j < num_;j++) {
             adjmatrix_[i][j] = false;
         }
     }
 
     for(int j = 0; j < edges_.size(); j++) {
-        string source = edges[j].getSourceId();
-        string des = edges[j].getDestId();
+        unsigned source = edges[j].getSourceId();
+        unsigned des = edges[j].getDestId();
         // airport class use unsigned
         // edge class use string 
         int s_index = num_;
@@ -52,7 +53,6 @@ Graph::Graph(vector<Airport> & airports, vector<Edge> & edges) {
             adjmatrix_[d_index][s_index] = true;
         }
     }
-
     for(int i = 0; i < num_; i++) {
         vector<Airport> adj = get_adj_airport(airports_[i]);
         map<Edge, Airport> adj_map;
@@ -134,13 +134,28 @@ Edge Graph::getEdge(Airport source, Airport destination) {
     }
     vector<Airport> adj = get_adj_airport(source);
     if(find(adj.begin(),adj.end(),destination) != adj.end()) {
-        return(Edge(source.AirportID(),destination.AirportID(),calculateWeight(source, destination));
+        return(Edge(source.AirportID(),destination.AirportID(),calculateWeight(source, destination)));
     }
     return Edge();
     
 }
 
 vector<Airport> Graph::traversal(Airport & source, Airport & destination) {
-    
+    queue<Airport> q;
+    vector<Airport> trav;
+    q.push(source);
+    while(!q.empty()) {
+        Airport curr = q.front();
+        visited_[curr.AirportID()] = true;
+        q.pop();
+        trav.push_back(curr);
+        for(Airport& adj: get_adj_airport(source)) {
+            if(!visited_[adj.AirportID()]) {
+                q.push(adj);
+                trav.push_back(adj);
+                visited_[adj.AirportID()] = true;
+            }
+        }
+    }
 
 }
