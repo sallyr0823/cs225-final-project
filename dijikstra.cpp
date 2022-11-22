@@ -1,83 +1,116 @@
 #include "dijikstra.h"
 #include <map>
 #include <iostream>
+#include <algorithm>
 
 
 using namespace std;
 
-Dijisktra::Dijisktra(Graph graph, Airport source) {
-    airports_ = graph.get_airports();
-    edges_ = graph.get_routes();
+Dijisktra::Dijisktra(Graph* graph) {
+    airports_ = graph -> get_airports();
+    edges_ = graph -> get_routes();
+    for (unsigned i = 0; i < airports_.size(); i++) {
+        mp[airports_[i].AirportID()] = i; 
+    }
+    this->graph = graph;
+    
 }
 vector<unsigned> Dijisktra::shortest_path(Airport source, Airport destination) {
     unsigned start = source.AirportID();
     unsigned dest = destination.AirportID();
+    cout << start << endl;
+    
     
     //144110 is the id of the last airport
-    vector<unsigned> distances(14110); 
-    vector<unsigned> previous(14110); 
-    vector<unsigned> que;    
-    que.push_back(start);   
+    vector<unsigned> distances; 
+    vector<unsigned> previous; 
+    vector<unsigned> que;   
+    //que.push_back(start);   
 
-    vector<bool> visited(14110);
-    for (unsigned i = 0; i < 14110; i++) {
-        visited[i] = false; 
-        distances[i] = numeric_limits<unsigned>::infinity(); 
-        previous[i] = -1;  
+    
+    vector<bool> visited;
+    for (unsigned i = 0; i < airports_.size(); i++) {
+        visited.push_back(false); 
+        distances.push_back(999999); 
+        previous.push_back(0);  
+        que.push_back(i);
     }
 
     //initialization
-    visited[start] = true; 
-    distances[start] = 0; 
-    previous[start] = start; 
+    distances[mp[start]] = 0; 
+    previous[mp[start]] = mp[start];
+
+    unsigned visitedCount = 0;
     
     unsigned curr; //ID of current airport
-    while (!que.empty()) {
+    while (visitedCount < airports_.size()) {
+        
         //find shortestdistance
-        curr = shortest_distance(que);
-        que.erase(remove(que.begin(),que.end(),curr), que.end()); //remove the current airport from the queue
+        curr = shortest_distance(que, distances, visited);
+        //cout << "???" << curr <<endl;
+
+        unsigned currAirportID = airports_[curr].AirportID();
+        visited[curr] = true;
+        visitedCount++;
+         //remove the current airport from the queue
+        //cout << airports_[curr].AirportName() << endl;
         if (curr == dest) {
             break;
         }
         //adj_airport
-        for (unsigned& adj : get_adj_airport(curr)) { 
-            if (visited[adj] == false) {  // if next airport has not been visited, then added to the queue and mark visited
-                que.push_back(adj);   
-                visited[adj] = true;   
-            }
-
-            if (visited[adj] == false || find(que.begin(), que.end(), adj) != que.end()) {
-                unsigned adj_dist = distances[curr] + getEdge(curr, adj).calculateWeight(); //  distance of node of current iteration from the start
-                if (adj_dist < distances[adj]) {
-                    distances[adj] = adj_dist; 
-                    previous[adj] = curr; 
+        //cout << graph->get_adj_airport(currAirportID).size() << " ";
+        for (unsigned& adj : graph->get_adj_airport(currAirportID)) {
+            //cout << currAirportID;  
+            if(currAirportID == 3364) {
+                //scout<< adj << "???";
+            }         
+            if(!visited[mp[adj]]) {
+                //if(adj == 3393) cout << "#####" << distances[curr];
+                unsigned adj_dist = distances[curr] + graph -> getEdge(currAirportID, adj).getWeight(); //  distance of node of current iteration from the start
+                if (adj_dist < distances[mp[adj]]) {
+                    //if(adj == 3393) cout << "####";
+                    distances[mp[adj]] = adj_dist; 
+                    previous[mp[adj]] = curr; 
                 }
             }
         }
     }
 
-    //back track to find path
-    vector<unsigned> path; 
-    curr = dest; 
-    if (previous[curr] != -1) { 
-        while (curr != start) {
+    // //back track to find path
+    vector<unsigned> path;
+    curr = mp[dest];
+    //cout << previous[curr];
+    if (previous[curr] != 0) { 
+        while (curr != mp[start]) {
             path.push_back(curr); 
             curr = previous[curr]; 
         }
         path.push_back(curr); 
+    
     }
+    cout << path.size() << endl;
     reverse(path.begin(), path.end()); //reverse the path 
     return path;
 }
-unsigned Dijisktra::shortest_distance(vector<unsigned> que) {
-    unsigned shortest_dist = numeric_limits<unsigned>::infinity(); 
-    unsigned min_index; 
+unsigned Dijisktra::shortest_distance(vector<unsigned> que, vector<unsigned> distances, vector<bool> visited) {
+    unsigned shortest_dist = distances[que[0]]; 
+    unsigned min_index = 0;
+    for(unsigned i = 0; i < que.size(); i++) {
+        if (!visited[i]) {
+            shortest_dist = distances[que[i]];
+            min_index = i;
+            break;
+        }
+    }
+    
     for (unsigned i = 0; i < que.size(); i++) { 
-        if (distances[que[i]] < shortest_dist) { 
+    
+        if (!visited[i] && distances[que[i]] < shortest_dist) { 
+            
             shortest_dist = distances[que[i]]; 
             min_index = i; 
         }
     }
-    return que[min_inxdex];
+    return min_index;
 }
 
