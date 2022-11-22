@@ -35,6 +35,7 @@ Graph::Graph(vector<Airport> & airports, vector<Edge> & edges) {
     for(unsigned j = 0; j < edges_.size();j++) {
         unsigned source = edges_[j].getSourceId();
         unsigned dest = edges_[j].getDestId();
+        
         adjlist_[source].push_back(dest);
     }
 }
