@@ -4,6 +4,7 @@
 #include <map>
 #include <queue>
 #include <vector>
+#include <cmath>
 
 #pragma once
 
@@ -13,8 +14,8 @@ class Dijisktra {
 
     public:
     Dijisktra(Graph graph, Airport source);
-    vector<Airport> shortest_path(Airport destination);
-    double shortest_distance(Airport destination);
+    vector<Airport> shortest_path(Airport source, Airport destination);
+    unsigned shortest_distance(vector<unsigned> que);
     private:
     vector<Airport> airports_;
     vector<Edge> edges_;
