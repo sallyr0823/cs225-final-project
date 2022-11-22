@@ -13,11 +13,12 @@ using namespace std;
 class Dijisktra {
 
     public:
-    Dijisktra(Graph graph, Airport source);
-    vector<Airport> shortest_path(Airport source, Airport destination);
-    unsigned shortest_distance(vector<unsigned> que);
+    Dijisktra(Graph* graph);
+    vector<unsigned> shortest_path(Airport source, Airport destination);
+    unsigned shortest_distance(vector<unsigned> que, vector<unsigned> distances, vector<bool> visited);
     private:
     vector<Airport> airports_;
     vector<Edge> edges_;
-    
+    Graph* graph;
+    map<unsigned, unsigned> mp;
 };
