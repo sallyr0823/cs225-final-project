@@ -62,6 +62,12 @@ string Edge::getSourceIATA() {
 string Edge::getDestIATA() {
     return destination.AirportIATA();
 }
+const Airport& Route::getSource() const {
+    return source;
+}
+const Airport& Route::getDest() const {
+    return detination;
+}
 void Edge::setSource(Airport s) {
     source = Airport(s);
 }

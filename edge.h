@@ -24,6 +24,8 @@ class Edge {
         string getSourceIATA();
         string getDestIATA();
         double getWeight();
+        const Airport& getSource() const;
+        const Airport& getDest() const;
 
         double calculateWeight(Airport source, Airport destination);
 
