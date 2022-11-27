@@ -38,6 +38,24 @@ Graph::Graph(vector<Airport> & airports, vector<Edge> & edges) {
         
         adjlist_[source].push_back(dest);
     }
+
+    // Initialize the rank matrix as all the entries equal to 0
+    rank_matrix = new vector<vector<double>>(num_);
+    for (int i = 0; i < num_; i++) {
+        for (int j = 0; j < num_; j++) {
+            rankMatrix[i].push_back(0);
+        }
+    }
+    // Change the rank matrix value to 1 if two airports at the given index has route between them
+    for (size_t t = 0; t < edges_.size(); t++) {
+        auto num_origin = count(airports_.begin(), airports_.end(), edges_[t].getSource());
+        auto num_dest = count(airports_.begin(), airports_.end(), edges_[t].getDest());
+        if (num_origin != 0 && num_dest != 0) {
+            int origin_index = find(airports_.begin(), airports_.end(), edges_[t].getSource()) - airports_.begin();
+            int dest_index = find(airports_.begin(), airports_.end(), edges_[t].getDest()) - airports_.begin();
+            rank_matrix[origin_index][dest_index] = 1;
+        }
+    }
 }
 
 Graph::Graph(const Graph& other) {
@@ -105,4 +123,8 @@ Edge Graph::getEdge(unsigned source, unsigned destination) {
     }
     return Edge();
     
+}
+
+vector<vector<double>> Graph::get_rank_matrix() const {
+    return rank_matrix;
 }
