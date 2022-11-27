@@ -9,14 +9,14 @@ Edge::Edge(){
     
 };
 Edge::Edge(Airport s, Airport d){
-    source = Airport(s);
-    destination = Airport(d); 
+    source = s;
+    destination = d;
     weight = calculateWeight(s,d);
 };
 
 Edge::Edge(Airport s, Airport d, double w){
-    source = Airport(s);
-    destination = Airport(d); 
+    source = s;
+    destination = d;
     weight = calculateWeight(s,d);
 };
 

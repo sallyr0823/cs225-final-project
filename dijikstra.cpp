@@ -15,6 +15,22 @@ Dijisktra::Dijisktra(Graph* graph) {
     this->graph = graph;
     
 }
+
+double Dijisktra::print_distance(Airport& source, Airport& destination) {
+    vector<unsigned> path = shortest_path(source,destination);
+    if(path.size() == 0) {
+        cout << "There are no routes between two airport" << endl;
+        return NULL;
+    }
+    double dist = 0;
+    for(int i = 0; i < path.size() - 1; i++) {
+        Edge e = Edge(airports_[path[i]],airports_[path[i+1]]);
+        dist += e.getWeight();
+    }
+    return dist;
+}
+
+
 vector<unsigned> Dijisktra::shortest_path(Airport source, Airport destination) {
     unsigned start = source.AirportID();
     unsigned dest = destination.AirportID();

@@ -21,13 +21,12 @@ class Graph {
         vector<unsigned> get_adj_airport(unsigned airportId);
         Edge getEdge(unsigned source, unsigned destination);
         bool exist_airport(unsigned airportId);
-        vector<unsigned> traversal(Airport & source, Airport & destination);
 
     private:
     int num_;
     vector<Airport> airports_;
     vector<Edge> edges_;
     unordered_map<unsigned, vector<unsigned >> adjlist_;
-    vector<bool> visited_;
+
   
 };

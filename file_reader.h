@@ -16,4 +16,5 @@ using namespace std;
 //with this file_reader, we convert the original file into a 2d vector
 
 
-vector<vector<string > > file_to_vector(const string& filename);
+vector<string > file_to_string(const string& filename);
+vector<string> split_string(const string& to_split, const char& delim);

@@ -9,22 +9,27 @@
 using namespace std;
 
 
-vector<vector<string >> file_to_vector(const string& filename) {
+vector<string> file_to_string(const string& filename) {
 	ifstream input(filename);
 	string currLine;
-	vector<vector<string >> out;
+	vector<string> out;
 
 	if (input.is_open()) {
-		while (getline(input, currLine)) {
-			istringstream currLineStream(currLine);
-			string add;
-			vector<string> line;
-			while (getline(currLineStream, add, ',')) {
-				line.push_back(add);
-			}
-			out.push_back(line);
+		string line;
+		while (getline(input, line)) {
+			out.push_back(line);	
 		}
 	}
 	input.close();
+	return out;
+}
+
+vector<string> split_string(const string& to_split, const char& delim) {
+	vector<string> out;
+	istringstream input(to_split);
+	string add;
+	while(getline(input, add, delim)) {
+		out.push_back(add);
+	}
 	return out;
 }

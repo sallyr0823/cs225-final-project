@@ -12,6 +12,7 @@
 #include <sstream>
 #include <fstream>
 #include <queue>
+#include <stack>
 
 
 using namespace std;
@@ -26,7 +27,6 @@ Graph::Graph(vector<Airport> & airports, vector<Edge> & edges) {
     airports_ = airports;
     edges_ = edges;
     num_ = airports.size();
-    visited_ = vector<bool>(num_, false);
     
     for(int i = 0; i < num_;i++) {
         vector<unsigned> insert;
@@ -48,7 +48,6 @@ Graph::Graph(const Graph& other) {
     airports_ = other.airports_;
     edges_ = other.edges_;
     adjlist_ = other.adjlist_;
-    visited_ = other.visited_;
 }
 
 
@@ -106,26 +105,4 @@ Edge Graph::getEdge(unsigned source, unsigned destination) {
     }
     return Edge();
     
-}
-//BFS traversal
-vector<unsigned> Graph::traversal(Airport & source, Airport & destination) {
-    unsigned dest = destination.AirportID();
-    queue<unsigned> q;
-    vector<unsigned> trav;
-    q.push(source.AirportID());
-    while(!q.empty() && q.front() != dest) {
-        unsigned curr = q.front();
-        visited_[curr] = true;
-        q.pop();
-        trav.push_back(curr);
-        for(unsigned& adj: get_adj_airport(curr)) {
-            if(!visited_[adj]) {
-                q.push(adj);
-                trav.push_back(adj);
-                visited_[adj] = true;
-            }
-        }
-    }
-    return trav;
-
 }
