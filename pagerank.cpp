@@ -1,4 +1,4 @@
-#include "PageRank.h"
+#include "pagerank.h"
 
 void PageRank::init_rank_matrix(Graph & graph) {
     size_t num_airports = graph.get_num_airports();
@@ -31,7 +31,7 @@ std::vector<double> PageRank::prob_calculation(Graph & graph) {
     size_t num_airports = graph.get_num_airports();
     // Initialize the rank vector as evenly distributed
     std::vector<double> rank_vector;
-    for (size_t k = 0; k < num_airports; i++) {
+    for (size_t k = 0; k < num_airports; k++) {
         rank_vector.push_back(1.0 / double(num_airports));
     }
     while (true) {
@@ -59,7 +59,7 @@ std::vector<Airport> PageRank::get_airport_rank(Graph & graph) {
     std::vector<Airport> airports = graph.get_airports();
     size_t num_airports = graph.get_num_airports();
     // Loop through to get the airport with the maximum rank value
-    for (int i = 0; i < num_airports; i++) {
+    for (unsigned i = 0; i < num_airports; i++) {
         int max_elem_idx = std::max_element(rank_vector.begin(), rank_vector.end()) - rank_vector.begin();
         rank_vector[max_elem_idx] = -1;
         airport_rank_vector.push_back(airports[max_elem_idx]);
