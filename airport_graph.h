@@ -21,12 +21,12 @@ class Graph {
         vector<unsigned> get_adj_airport(unsigned airportId);
         Edge getEdge(unsigned source, unsigned destination);
         bool exist_airport(unsigned airportId);
-        vector<vector<double>> rank_matrix;
-        vector<vector<double>> get_rank_matrix() const;
+        vector<vector<double >> get_rank_matrix() const;
 
     private:
         int num_;
         vector<Airport> airports_;
         vector<Edge> edges_;
         unordered_map<unsigned, vector<unsigned >> adjlist_;
+        vector<vector<double >> rank_matrix;
 };

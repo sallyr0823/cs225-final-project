@@ -1,5 +1,5 @@
 EXENAME = main
-OBJS = file_reader.o main.o airport_graph.o edge.o airport.o dijikstra.o BFS.o
+OBJS = file_reader.o main.o airport_graph.o edge.o airport.o dijikstra.o BFS.o pagerank.o
 
 CXX = clang++
 CXXFLAGS = $(CS225) -std=c++1y -stdlib=libc++ -c -g -O0 -Wall -Wextra -pedantic
@@ -41,6 +41,8 @@ dijikstra.o: dijikstra.cpp dijikstra.h
 
 BFS.o: BFS.cpp BFS.h
 	$(CXX) $(CXXFLAGS) BFS.cpp
+pagerank.o: pagerank.cpp pagerank.h
+	$(CXX) $(CXXFLAGS) pagerank.cpp
 
 test: output_msg tests/catch/catchmain.cpp tests/tests.cpp file_reader.cpp
 	$(LD) tests/catch/catchmain.cpp tests/tests.cpp file_reader.cpp $(LDFLAGS) -o test

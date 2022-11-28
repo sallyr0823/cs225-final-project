@@ -6,6 +6,7 @@
 #include "airport_graph.h"
 #include "dijikstra.h"
 #include "BFS.h"
+#include "pagerank.h"
 
 using namespace std;
 
@@ -60,8 +61,8 @@ int main()
     Dijisktra dij(&graph);
 
     
-    vector<unsigned> path =  dij.shortest_path(airports[mp[2223]], airports[mp[4334]]);
-    vector<unsigned> path_2 = bfs.BFS_path(airports[mp[2223]],airports[mp[4334]]);
+    vector<unsigned> path =  dij.shortest_path(airports[mp[2966]], airports[mp[2975]]);
+    vector<unsigned> path_2 = bfs.BFS_path(airports[mp[2966]],airports[mp[2975]]);
 
     
     for (unsigned i = 0; i < path.size(); i++) {
@@ -72,7 +73,7 @@ int main()
             cout << endl;
         }
     }
-    cout << dij.print_distance(airports[mp[2223]],airports[mp[4334]])<<endl;
+    cout << dij.print_distance(airports[mp[2966]],airports[mp[2975]])<<endl;
     
     for (unsigned i = 0; i < path_2.size(); i++) {
         cout<<airports[path_2[i]].AirportName();
@@ -82,7 +83,7 @@ int main()
             cout << endl;
     }
     }
-    cout << bfs.print_distance(airports[mp[2223]],airports[mp[4334]])<<endl;
+    cout << bfs.print_distance(airports[mp[2966]],airports[mp[2975]])<<endl;
     
 
     cout << airport.size() << endl;

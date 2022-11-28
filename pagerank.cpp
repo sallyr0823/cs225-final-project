@@ -2,7 +2,7 @@
 
 void PageRank::init_rank_matrix(Graph & graph) {
     size_t num_airports = graph.get_num_airports();
-    std::vector<std::vector<double>> rank_matrix = graph.get_rank_matrix();
+    std::vector<std::vector<double >> rank_matrix = graph.get_rank_matrix();
     for (size_t i = 0; i < num_airports; i++) {
         int number = 0;
         // Check whether two airports has already been recorded in the rank matrix
