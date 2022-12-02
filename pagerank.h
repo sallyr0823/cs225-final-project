@@ -4,17 +4,18 @@
 #include <iostream>
 #include <algorithm>
 #include <cmath>
-
+using namespace std;
 class PageRank {
     public:
-        void init_rank_matrix(Graph & graph);
-        std::vector<unsigned> prob_calculation(Graph & graph,unsigned damp);
-        std::vector<Airport> get_airport_rank(Graph & graph);
-        void store_pagerank(Graph & graph);
+        //PageRank();
+        PageRank(Graph& graph);
+        void init_rank(double damp, int iteration);
+        vector<unsigned> get_airport_rank();
+        void store_pagerank();
     private:
-        vector<vector<unsigned >> rank_;
+        vector<unsigned> rank_;
         vector<Airport> airports_;
-        vector<Edge> edges_;
-        Graph graph_;
+        unordered_map<unsigned, vector<unsigned >> adjList;
         map<unsigned, unsigned> mp;
+        size_t num_;
 };

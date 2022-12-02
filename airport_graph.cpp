@@ -50,7 +50,6 @@ Graph::Graph(const Graph& other) {
     airports_ = other.airports_;
     edges_ = other.edges_;
     adjlist_ = other.adjlist_;
-    rank_matrix = other.rank_matrix;
 }
 
 

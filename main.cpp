@@ -56,7 +56,7 @@ int main()
  
     Graph graph (airports, edges);
     
-    BFS bfs(&graph);
+    /*BFS bfs(&graph);
 
     Dijisktra dij(&graph);
 
@@ -83,10 +83,12 @@ int main()
             cout << endl;
     }
     }
-    cout << bfs.print_distance(airports[mp[2966]],airports[mp[2975]])<<endl;
+    cout << bfs.print_distance(airports[mp[2966]],airports[mp[2975]])<<endl;*/
     
-    PageRank pagerank;
-	pagerank.init_rank_matrix(graph);
+    PageRank pagerank(graph);
+	pagerank.init_rank(0.85,10);
+    pagerank.get_airport_rank();
+    pagerank.store_pagerank();
     //std::vector<double> rand = pagerank.prob_calculation(graph);
 
     cout << airport.size() << endl;
