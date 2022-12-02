@@ -1,33 +1,27 @@
 #include "pagerank.h"
 
-void PageRank::init_rank_matrix(Graph & graph) {
-    size_t num_airports = graph.get_num_airports();
-    std::vector<std::vector<double >> rank_matrix = graph.get_rank_matrix();
-    for (size_t i = 0; i < num_airports; i++) {
-        int number = 0;
-        // Check whether two airports has already been recorded in the rank matrix
-        for (size_t j = 0; j < num_airports; j++) {
-            if (rank_matrix[i][j] != 0) {
-                number++;
-            }
-        }
-        // Airports has edges between them, utlize the PageRank algorithm
-        if (number != 0) {
-            for (size_t t = 0; t < num_airports; t++) {
-                if (rank_matrix[i][t] != 0) {
-                    rank_matrix[i][t] = rank_matrix[i][t] / number;
-                }
-            }
-        } else {
-            // This airport does not appear in the rank matrix
-            for (size_t k = 0; k < num_airports; k++) {
-                rank_matrix[i][k] = 1.0 / double(num_airports);
-            }
+void PageRank::init_rank_matrix(Graph& graph) {
+    size_t num_ = graph.get_num_airports();
+    airports_ = graph.get_airports();
+    edges_ = graph.get_routes();
+    unordered_map<unsigned, vector<unsigned >>& adjList = graph.get_adjList();
+    // initialize transopose of pagerank
+    vector<unsigned> insert(num_,0);
+    for (size_t i = 0; i < num_; i++) {
+        mp[airports_[i].AirportID()] = i; 
+        rank_.push_back(insert);
+    }
+    graph_ = graph;
+    for(auto apt : adjList) {
+        unsigned ind = mp[apt.first];
+        unsigned fac = apt.second.size();
+        for(auto adj_apt : apt.second) {
+            rank_[mp[adj_apt]][ind] = 1 / fac;
         }
     }
 }
 
-std::vector<double> PageRank::prob_calculation(Graph & graph) {
+std::vector<unsigned> PageRank::prob_calculation(Graph & graph,unsigned damp) {
     size_t num_airports = graph.get_num_airports();
     // Initialize the rank vector as evenly distributed
     std::vector<double> rank_vector;
@@ -65,4 +59,15 @@ std::vector<Airport> PageRank::get_airport_rank(Graph & graph) {
         airport_rank_vector.push_back(airports[max_elem_idx]);
     }
     return airport_rank_vector;
+}
+
+void PageRank::store_pagerank(Graph& graph) {
+    std::ofstream page;
+    page.open("pagerank.txt");
+
+    std::vector<Airport> rank_vector = get_airport_rank(graph);
+    for(unsigned i = 0; i < rank_vector.size(); i++) {
+        page << i << " : " << rank_vector[i].AirportName()<< std::endl;
+    }
+    page.close();
 }

@@ -18,15 +18,14 @@ class Graph {
         int get_num_airports();
         vector<Airport> & get_airports();
         vector<Edge> & get_routes();
+        unordered_map<unsigned, vector<unsigned >>& get_adjList();
         vector<unsigned> get_adj_airport(unsigned airportId);
         Edge getEdge(unsigned source, unsigned destination);
         bool exist_airport(unsigned airportId);
-        vector<vector<double >> get_rank_matrix() const;
 
     private:
         int num_;
         vector<Airport> airports_;
         vector<Edge> edges_;
         unordered_map<unsigned, vector<unsigned >> adjlist_;
-        vector<vector<double >> rank_matrix;
 };

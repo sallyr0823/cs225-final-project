@@ -85,6 +85,9 @@ int main()
     }
     cout << bfs.print_distance(airports[mp[2966]],airports[mp[2975]])<<endl;
     
+    PageRank pagerank;
+	pagerank.init_rank_matrix(graph);
+    //std::vector<double> rand = pagerank.prob_calculation(graph);
 
     cout << airport.size() << endl;
     return 0;
