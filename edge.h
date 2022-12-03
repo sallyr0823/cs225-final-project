@@ -16,8 +16,8 @@ class Edge {
 
         //get 
 
-        unsigned getSourceId();       
-        unsigned getDestId();    
+        int getSourceId();       
+        int getDestId();    
 
         string getSourceName();
         string getDestName();

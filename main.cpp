@@ -11,6 +11,7 @@
 using namespace std;
 
 
+
 int main()
 {
     vector<string> airport = file_to_string("data/airports.dat");
@@ -41,22 +42,29 @@ int main()
     vector<string> edge_data = file_to_string("data/routes.dat");
     for (unsigned i = 0; i < edge_data.size(); i++) {
         vector<string> out= split_string(edge_data[i],',');
-        try{
-            int s = stoul(out[3]);
-            int d = stoul(out[5]);
+        if(out[3] == "\N" || out[5] == "\N") {continue;}
+        try {
+            //cout << out[6] << endl;
+            int x = stoi(out[3]);
+            int y = stoi(out[5]);
+            
         } catch(...) {
             continue;
         }
-        Airport source = airports[mp[stoul(out[3])]];
-        Airport dest = airports[mp[stoul(out[5])]];
+        if(mp.find(stoi(out[3])) == mp.end() || mp.find(stoi(out[5])) == mp.end()) {
+            continue;
+        }
+        Airport source = airports[mp[stoi(out[3])]];
+        Airport dest = airports[mp[stoi(out[5])]];
+        
         Edge e(source, dest);
         edges.push_back(e);
     }
 
- 
+    cout << edges.size() << endl;
     Graph graph (airports, edges);
     
-    /*BFS bfs(&graph);
+    BFS bfs(&graph);
 
     Dijisktra dij(&graph);
 
@@ -83,13 +91,12 @@ int main()
             cout << endl;
     }
     }
-    cout << bfs.print_distance(airports[mp[2966]],airports[mp[2975]])<<endl;*/
+    cout << bfs.print_distance(airports[mp[2966]],airports[mp[2975]])<<endl;
     
     PageRank pagerank(graph);
-	pagerank.init_rank(0.85,10);
+	pagerank.init_rank(0.85,100);
     pagerank.get_airport_rank();
     pagerank.store_pagerank();
-    //std::vector<double> rand = pagerank.prob_calculation(graph);
 
     cout << airport.size() << endl;
     return 0;
