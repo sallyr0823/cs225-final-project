@@ -1,14 +1,89 @@
 #include "catch/catch.hpp"
-#include <vector>
-#include <string>
-#include <iostream>
+ #include <vector>
+ #include <string>
+ #include <iostream>
+ #include "../airport.h"
+ #include "../edge.h"
+ #include "../airport_graph.h"
+ #include "../dijikstra.h"
+ #include "../file_reader.h"
 
-#include "../file_reader.h"
+ using namespace std;
 
-using namespace std;
 
-TEST_CASE("file_reader working" ) {
-    vector<string> airport = file_to_string("/Users/sallyr/Documents/final_proj/dataset/airports.dat");
+vector<string> airport = file_to_string("../data/airports.dat");
+     //unsigned ID, std::string name, std::string city,std::string country, std::string IATA, std::string ICAO,double latitude, double longitude
+
+extern  vector<Airport> airports;
+
+     for (unsigned int i = 0; i < airport.size(); i++) {
+         vector<string> out= split_string(airport[i],',');
+         try {
+             double x = stod(out[6]);
+             double y = stod(out[7]);
+
+         } catch(...) {
+             continue;
+         }
+         Airport a(stoul(out[0]),out[1],out[2],out[3],out[4],out[5], stod(out[6]),stod(out[7]));
+         airports.push_back(a);
+     }
+
+
+extern map<unsigned, unsigned> mp;
+     for (unsigned int i = 0; i < airports.size(); i++) {
+         mp[airports[i].AirportID()] = i;
+     }
+
+
+
+extern vector<Edge> edges;
+    vector<string> edge_data = file_to_string("../data/routes.dat");
+    for (unsigned i = 0; i < edge_data.size(); i++) {
+        vector<string> out= split_string(edge_data[i],',');
+        if(out[3] == "\N" || out[5] == "\N") {continue;}
+        try {
+            //cout << out[6] << endl;
+            int x = stoi(out[3]);
+            int y = stoi(out[5]);
+            
+        } catch(...) {
+            continue;
+        }
+        if(mp.find(stoi(out[3])) == mp.end() || mp.find(stoi(out[5])) == mp.end()) {
+            continue;
+        }
+        Airport source = airports[mp[stoi(out[3])]];
+        Airport dest = airports[mp[stoi(out[5])]];
+        
+        Edge e(source, dest);
+        edges.push_back(e);
+    }
+
+
+
+
+
+ TEST_CASE("test Graph" ) {
+
+
     
+   Graph graph (airports, edges);   
 
-}
+   REQUIRE(airport.size() == 7698);
+   REQUIRE(graph.exist_airport(153));
+   REQUIRE(graph.getEdge(4029, 6969).getWeight() > 0.0);
+ }
+
+
+ TEST_CASE("test dijikstra" ) {
+   Graph graph (airports, edges);   
+   Dijisktra dij(&graph);
+
+
+   vector<unsigned> path =  dij.shortest_path(airports[mp[2966]], airports[mp[2975]]);
+
+   REQUIRE(airports[path[1]].AirportName() == "\"Pulkovo Airport\"");
+   REQUIRE(airports[path[2]].AirportName() == "\"Koltsovo Airport\"");
+
+ }
