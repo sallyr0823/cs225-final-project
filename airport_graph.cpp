@@ -31,6 +31,7 @@ Graph::Graph(vector<Airport> & airports, vector<Edge> & edges) {
     for(int i = 0; i < num_;i++) {
         vector<unsigned> insert;
         adjlist_.insert({airports_[i].AirportID(),insert});
+        mp[airports_[i].AirportID()] = i;
     }
     for(unsigned j = 0; j < edges_.size();j++) {
         unsigned source = edges_[j].getSourceId();
@@ -38,7 +39,6 @@ Graph::Graph(vector<Airport> & airports, vector<Edge> & edges) {
         
         adjlist_[source].push_back(dest);
     }
-
     
 }
 
@@ -63,6 +63,10 @@ vector<Airport> & Graph::get_airports() {
 
 vector<Edge> & Graph::get_routes() {
     return edges_;
+}
+
+map<unsigned, unsigned> Graph::get_index_map() {
+    return mp;
 }
 
 unordered_map<unsigned, vector<unsigned >>& Graph::get_adjList() {
@@ -94,19 +98,9 @@ Edge Graph::getEdge(unsigned source, unsigned destination) {
     }
     vector<unsigned> adj = get_adj_airport(source);
     if(find(adj.begin(),adj.end(),destination) != adj.end()) { 
-        Airport s;
-        Airport d;
-        for(int i = 0; i < num_; i++) {
-            if(source == airports_[i].AirportID()) {
-                s = airports_[i];
-            }
-            if(destination == airports_[i].AirportID()) {
-                d = airports_[i];
-            }
-            if(s.AirportID() != 0 && d.AirportID() != 0) {
-                break;
-            }
-        }
+        Airport s = airports_[mp[source]];
+        Airport d = airports_[mp[destination]];
+        
         return Edge(s,d);
     }
     return Edge();

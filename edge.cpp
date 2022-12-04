@@ -14,17 +14,12 @@ Edge::Edge(Airport s, Airport d){
     weight = calculateWeight(s,d);
 };
 
-Edge::Edge(Airport s, Airport d, double w){
-    source = s;
-    destination = d;
-    weight = calculateWeight(s,d);
-};
 
 
-int Edge::getSourceId() {
+unsigned Edge::getSourceId() {
     return source.AirportID();
 }
-int Edge::getDestId() {
+unsigned Edge::getDestId() {
     return destination.AirportID();
 }
 double Edge::calculateWeight(Airport source, Airport destination) {
@@ -80,12 +75,10 @@ bool Edge::operator<(const Edge& other) const {
     return weight < other.weight;
 }
 
-bool Edge::operator==(Edge& other) const {
-    if (source.AirportID() != other.source.AirportID()) {
-        return false;
+bool Edge::operator==(const Edge& other) const {
+    if (source.AirportID() == other.source.AirportID() && destination.AirportID() == other.destination.AirportID()) {
+        return true;
     }
-    if (destination.AirportID() != other.destination.AirportID()) {
-        return false;
-    }
-    return true;
+
+    return false;
 }

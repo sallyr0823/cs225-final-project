@@ -11,13 +11,11 @@ class Edge {
         Edge();
         //constructor without given weight
         Edge(Airport s, Airport d);
-        //constructor with everything
-        Edge(Airport s, Airport d, double w);
 
         //get 
 
-        int getSourceId();       
-        int getDestId();    
+        unsigned getSourceId();       
+        unsigned getDestId();    
 
         string getSourceName();
         string getDestName();
@@ -36,7 +34,7 @@ class Edge {
 
         //operator overloading
         bool operator<(const Edge& other) const;
-        bool operator==(Edge& other) const;
+        bool operator==(const Edge& other) const;
     
         //std::pair<double, double> AirportLocation() const;
         

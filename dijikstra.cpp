@@ -20,7 +20,7 @@ double Dijisktra::print_distance(Airport& source, Airport& destination) {
     vector<unsigned> path = shortest_path(source,destination);
     if(path.size() == 0) {
         cout << "There are no routes between two airport" << endl;
-        return NULL;
+        return 0.0;
     }
     double dist = 0;
     for(int i = 0; i < path.size() - 1; i++) {

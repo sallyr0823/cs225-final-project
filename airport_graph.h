@@ -18,6 +18,7 @@ class Graph {
         int get_num_airports();
         vector<Airport> & get_airports();
         vector<Edge> & get_routes();
+        map<unsigned, unsigned> get_index_map();
         unordered_map<unsigned, vector<unsigned >>& get_adjList();
         vector<unsigned> get_adj_airport(unsigned airportId);
         Edge getEdge(unsigned source, unsigned destination);
@@ -28,4 +29,5 @@ class Graph {
         vector<Airport> airports_;
         vector<Edge> edges_;
         unordered_map<unsigned, vector<unsigned >> adjlist_;
+        map<unsigned, unsigned> mp;
 };

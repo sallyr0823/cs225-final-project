@@ -41,14 +41,12 @@ dijikstra.o: dijikstra.cpp dijikstra.h
 
 BFS.o: BFS.cpp BFS.h
 	$(CXX) $(CXXFLAGS) BFS.cpp
+
 pagerank.o: pagerank.cpp pagerank.h
 	$(CXX) $(CXXFLAGS) pagerank.cpp
 
-test: output_msg tests/catch/catchmain.cpp tests/tests.cpp file_reader.cpp
-	$(LD) tests/catch/catchmain.cpp tests/tests.cpp file_reader.cpp $(LDFLAGS) -o test
-
-tests.o: tests/tests.cpp tests/catch/catch.hpp file_reader.cpp 
-	$(CXX) $(CXXFLAGS) tests/tests.cpp
+test: output_msg tests/catch/catchmain.cpp tests/tests.cpp file_reader.cpp airport.cpp edge.cpp airport_graph.cpp pagerank.cpp dijikstra.cpp BFS.cpp
+	$(LD) tests/catch/catchmain.cpp tests/tests.cpp  file_reader.cpp airport.cpp edge.cpp airport_graph.cpp pagerank.cpp dijikstra.cpp BFS.cpp $(LDFLAGS) -o test
 
 clean:
 	-rm -f *.o $(EXENAME) test
