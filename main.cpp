@@ -30,6 +30,7 @@ int main()
 
     bool dataset_exist = false;
     bool status = true;
+    map<unsigned, unsigned> mp;
     while(!dataset_exist && status) {
         vector<Airport> airports;
         vector<Edge> edges;
@@ -39,7 +40,8 @@ int main()
         cout << "If you want to continue, please enter yes. It you want to quit, please enter no." << endl;
         cin >> begin_choice;
         if(begin_choice == "yes") {
-            vector<string> airport = file_to_string("data/airports.txt");
+            vector<string> airport = file_to_string("data/airports.dat");
+            cout << airport.size();
             for (unsigned int i = 0; i < airport.size(); i++) {
                 vector<string> out= split_string(airport[i],',');
                 try {
@@ -48,38 +50,40 @@ int main()
                     double y = stod(out[7]);
             
                 } catch(...) {
-                continue;
-            }
+                    continue;
+                }
                 Airport a(stoul(out[0]),out[1],out[2],out[3],out[4],out[5], stod(out[6]),stod(out[7]));
                 airports.push_back(a);
             }
    
-            map<unsigned, unsigned> mp;
-            for (unsigned int i = 0; i < airports.size(); i++) {
-            mp[airports[i].AirportID()] = i;
-        }
-
-
-            vector<string> edge_data = file_to_string("data/routes.txt");
-            for (unsigned i = 0; i < edge_data.size(); i++) {
-             vector<string> out= split_string(edge_data[i],',');
-            if(out[3] == "\N" || out[5] == "\N") {continue;}
-            try {
-            //cout << out[6] << endl;
-            int x = stoi(out[3]);
-            int y = stoi(out[5]);
             
-            } catch(...) {
-            continue;
+            for (unsigned int i = 0; i < airports.size(); i++) {
+                mp[airports[i].AirportID()] = i;
             }
-            if(mp.find(stoi(out[3])) == mp.end() || mp.find(stoi(out[5])) == mp.end()) {
+
+            
+
+
+            vector<string> edge_data = file_to_string("data/routes.dat");
+            for (unsigned i = 0; i < edge_data.size(); i++) {
+                vector<string> out= split_string(edge_data[i],',');
+                if(out[3] == "\N" || out[5] == "\N") {continue;}
+                try {
+                //cout << out[6] << endl;
+                int x = stoi(out[3]);
+                int y = stoi(out[5]);
+                
+                } catch(...) {
                 continue;
-            }
-            Airport source = airports[mp[stoi(out[3])]];
-            Airport dest = airports[mp[stoi(out[5])]];
-        
-            Edge e(source, dest);
-            edges.push_back(e);
+                }
+                if(mp.find(stoi(out[3])) == mp.end() || mp.find(stoi(out[5])) == mp.end()) {
+                    continue;
+                }
+                Airport source = airports[mp[stoi(out[3])]];
+                Airport dest = airports[mp[stoi(out[5])]];
+            
+                Edge e(source, dest);
+                edges.push_back(e);
             }
             dataset_exist = true;
         } else if(begin_choice == "no") {
@@ -87,8 +91,8 @@ int main()
         } else {
             cout << "Invalid input! Please try again." << endl;
         }
-    Graph graph(airports,edges);
-    string algo_choice;
+        Graph graph(airports,edges);
+        string algo_choice;
         cout << endl;
         cout << "We have prepared several algorithms." << endl;
         cout << "Please choose the algorithm you want to run." << endl;
@@ -124,6 +128,36 @@ int main()
             }
             cout << "The distance is: " << endl;
             cout << bfs.print_distance(source,destination) << endl;
+        } else if (algo_choice == "dij") {
+            unsigned source;
+            unsigned destination;
+            cout << "You can enter two airport id (0-14110 recommended) to see the route path between these two airports" << endl;
+            cout << "Enter a departure airport id:" << endl;
+            cin >> source;
+            cout << "Enter a destination airport id:" << endl;
+            cin >> destination;
+            cout << endl;
+            cout << "The path is:" << endl;
+            
+            Dijisktra dij(&graph);
+            
+            vector<unsigned> path = dij.shortest_path(airports[mp[source]], airports[mp[destination]]);
+            if(path.size() == 0) {
+                cout << "Sorry, there are no available routes or airport doesn't exists" << endl;
+            } else {
+                for (size_t i = 0; i < path.size(); i++) {
+                    cout<<airports[path[i]].AirportName();
+                    if(i < path.size() - 1) {
+                        cout << "->";
+                    } else {
+                        cout << endl;
+                    }
+                }
+
+            }
+        } else if(algo_choice == "q") {
+            cout << "End" <<endl;
+            return 0;
         }
 
     }
