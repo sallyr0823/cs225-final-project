@@ -49,7 +49,15 @@ Graph::Graph(const Graph& other) {
     num_ = other.num_;
     airports_ = other.airports_;
     edges_ = other.edges_;
-    adjlist_ = other.adjlist_;
+    for(int i = 0; i < num_; i++) {
+        vector<unsigned> insert;
+        adjlist_.insert({other.airports_[i].AirportID(),insert});
+    }
+    for(unsigned j = 0; j < edges_.size();j++) {
+        unsigned source = edges_[j].getSourceId();
+        unsigned dest = edges_[j].getDestId();
+         adjlist_[source].push_back(dest);
+    }
 }
 
 

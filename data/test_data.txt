@@ -1,0 +1,5 @@
+monday,is,1
+tuesday,is,2
+wednesday,is,3
+thursday,is,4
+friday,is,5

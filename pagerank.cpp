@@ -98,6 +98,17 @@ vector<unsigned> PageRank::get_airport_rank() {
     return airport_rank_;
 }
 
+string PageRank::print_rank(int rank) {
+    if(rank <= 0 || rank > num_) {
+        return "Invalid input, try again";
+    }
+    unsigned airportid = get_airport_rank()[rank - 1];
+    string output = airports_[mp[airportid]].AirportName() ;
+    output += " is ranked ";
+    output += to_string(rank);
+    return output;
+}
+
 void PageRank::store_pagerank() {
     std::ofstream page;
     page.open("pagerank.txt");

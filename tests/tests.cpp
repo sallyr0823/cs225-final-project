@@ -13,7 +13,7 @@
  using namespace std;
 
 TEST_CASE("test file_reader") {
-    vector<string> test_string = file_to_string("data/test_data.dat");
+    vector<string> test_string = file_to_string("data/test_data.txt");
     REQUIRE(test_string[0] == "monday,is,1");
     REQUIRE(test_string[1] == "tuesday,is,2");
     REQUIRE(test_string[2] == "wednesday,is,3");
@@ -100,10 +100,9 @@ TEST_CASE("test airport_graph") {
    REQUIRE(fake_graph.get_adj_airport(3).size() == 1);
    REQUIRE(fake_graph.get_adj_airport(-1).size() == 0);
    REQUIRE(to_test.getSourceId() == 3);
-
  }
 
- TEST_CASE(test_bfs) {
+ TEST_CASE("test_bfs") {
     vector<string> fake_airport = file_to_string("data/test_airports.txt");
     vector<Airport> fake_airports;
     for (unsigned int i = 0; i < fake_airport.size(); i++) {
@@ -131,5 +130,66 @@ TEST_CASE("test airport_graph") {
     REQUIRE(bfs.BFS_connected(2).size() == 3);
     vector<unsigned> path = bfs.BFS_path(2,4);
     REQUIRE(path[0] == 1);
-    REQUIRE(path[1] == 4);
+    REQUIRE(path[1] == 0);
+    REQUIRE(path[2] == 3);
  }
+
+ TEST_CASE("test dijikstra" ) {
+    
+    
+    vector<string> airport = file_to_string("data/test_airports.txt");
+    //unsigned ID, std::string name, std::string city,std::string country, std::string IATA, std::string ICAO,double latitude, double longitude
+    
+    vector<Airport> airports;
+    
+    for (unsigned int i = 0; i < airport.size(); i++) {
+        vector<string> out= split_string(airport[i],',');
+        try {
+            double x = stod(out[6]);
+            double y = stod(out[7]);
+            
+        } catch(...) {
+            continue;
+        }
+        Airport a(stoul(out[0]),out[1],out[2],out[3],out[4],out[5], stod(out[6]),stod(out[7]));
+        airports.push_back(a);
+    }
+    
+   
+    map<unsigned, unsigned> mp;
+    for (unsigned int i = 0; i < airports.size(); i++) {
+        mp[airports[i].AirportID()] = i;
+    }
+    
+
+
+    vector<Edge> edges;
+    vector<string> edge_data = file_to_string("data/test_routes.txt");
+    for (unsigned i = 0; i < edge_data.size(); i++) {
+        vector<string> out= split_string(edge_data[i],',');
+        try{
+            int s = stoul(out[3]);
+            int d = stoul(out[5]);
+        } catch(...) {
+            continue;
+        }
+        Airport source = airports[mp[stoul(out[3])]];
+        Airport dest = airports[mp[stoul(out[5])]];
+        Edge e(source, dest);
+        edges.push_back(e);
+    }
+    
+  Graph graph (airports, edges);   
+  Dijisktra dij(&graph);
+  vector<unsigned> path ;
+  path =  dij.shortest_path(1, 4);
+  REQUIRE(path.size() == 2);
+  REQUIRE(airports[path[0]].AirportID() == 1);
+  REQUIRE(airports[path[1]].AirportID() == 4);
+
+
+  /*REQUIRE(path.size() == 5);
+  REQUIRE(airports[path[1]].AirportName() == "\"Chifeng Airport\"");
+  REQUIRE(airports[path[2]].AirportName() == "\"Beijing Capital International Airport\"");
+  REQUIRE(airports[path[3]].AirportName() == "\"Lester B. Pearson International Airport\"");*/
+}

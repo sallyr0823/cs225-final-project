@@ -11,6 +11,7 @@ class PageRank {
         PageRank(Graph& graph);
         void init_rank(double damp, int iteration);
         vector<unsigned> get_airport_rank();
+        string print_rank(int rank);
         void store_pagerank();
     private:
         vector<double> rank_;

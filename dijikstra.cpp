@@ -16,14 +16,14 @@ Dijisktra::Dijisktra(Graph* graph) {
     
 }
 
-double Dijisktra::print_distance(Airport& source, Airport& destination) {
+double Dijisktra::print_distance(unsigned source, unsigned destination) {
     vector<unsigned> path = shortest_path(source,destination);
     if(path.size() == 0) {
         cout << "There are no routes between two airport" << endl;
         return 0.0;
     }
     double dist = 0;
-    for(int i = 0; i < path.size() - 1; i++) {
+    for(unsigned i = 0; i < path.size() - 1; i++) {
         Edge e = Edge(airports_[path[i]],airports_[path[i+1]]);
         dist += e.getWeight();
     }
@@ -31,10 +31,12 @@ double Dijisktra::print_distance(Airport& source, Airport& destination) {
 }
 
 
-vector<unsigned> Dijisktra::shortest_path(Airport source, Airport destination) {
-    unsigned start = source.AirportID();
-    unsigned dest = destination.AirportID();
-    cout << start << endl;
+vector<unsigned> Dijisktra::shortest_path(unsigned source, unsigned destination) {
+    if(!graph->exist_airport(source) || !graph->exist_airport(destination)) {
+        return vector<unsigned>();
+    }
+    unsigned start = source ;
+    unsigned dest = destination;
     
     
     //144110 is the id of the last airport
@@ -48,7 +50,7 @@ vector<unsigned> Dijisktra::shortest_path(Airport source, Airport destination) {
     for (unsigned i = 0; i < airports_.size(); i++) {
         visited.push_back(false); 
         distances.push_back(999999); 
-        previous.push_back(0);  
+        previous.push_back(-1);  
         que.push_back(i);
     }
 
@@ -86,7 +88,7 @@ vector<unsigned> Dijisktra::shortest_path(Airport source, Airport destination) {
                 if (adj_dist < distances[mp[adj]]) {
                     //if(adj == 3393) cout << "####";
                     distances[mp[adj]] = adj_dist; 
-                    previous[mp[adj]] = curr; 
+                    previous[mp[adj]] = curr; //index
                 }
             }
         }
@@ -96,15 +98,12 @@ vector<unsigned> Dijisktra::shortest_path(Airport source, Airport destination) {
     vector<unsigned> path;
     curr = mp[dest];
     //cout << previous[curr];
-    if (previous[curr] != 0) { 
-        while (curr != mp[start]) {
+    while (curr != mp[start]) {
             path.push_back(curr); 
             curr = previous[curr]; 
         }
         path.push_back(curr); 
     
-    }
-    cout << path.size() << endl;
     reverse(path.begin(), path.end()); //reverse the path 
     return path;
 }

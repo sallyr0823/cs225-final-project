@@ -10,7 +10,9 @@ BFS::BFS(Graph graph) {
     num_ = graph. get_num_airports();
     airports_ = graph.get_airports();
     edges_ = graph.get_routes();
-    mp = graph.get_index_map();
+    for (unsigned i = 0; i < airports_.size(); i++) {
+        mp[airports_[i].AirportID()] = i; 
+    }
 }
 
 vector<unsigned> BFS::BFS_connected(unsigned source) {
@@ -24,7 +26,7 @@ vector<unsigned> BFS::BFS_connected(unsigned source) {
     while(!q.empty()) {
         curr = q.front();
         q.pop();
-        for(unsigned& adj: graph_.get_adj_airport(airports_[curr].AirportID())) {
+        for(unsigned& adj:graph_.get_adj_airport(airports_[curr].AirportID())) {
             if(!visited_[mp[adj]]) {
                 q.push(mp[adj]);
                 trav.push_back(mp[adj]);
@@ -37,7 +39,6 @@ vector<unsigned> BFS::BFS_connected(unsigned source) {
 double BFS::print_distance(unsigned source, unsigned destination) {
     vector<unsigned> path = BFS_path(source,destination);
     if(path.size() == 0) {
-        cout << "There are no routes between two airport" << endl;
         return 0.0;
     }
     double dist = 0;
