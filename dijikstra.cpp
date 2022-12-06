@@ -19,10 +19,9 @@ Dijisktra::Dijisktra(Graph* graph) {
 double Dijisktra::print_distance(unsigned source, unsigned destination) {
     vector<unsigned> path = shortest_path(source,destination);
     if(path.size() == 0) {
-        cout << "There are no routes between two airport" << endl;
         return 0.0;
     }
-    double dist = 0;
+    double dist = 0.0;
     for(unsigned i = 0; i < path.size() - 1; i++) {
         Edge e = Edge(airports_[path[i]],airports_[path[i+1]]);
         dist += e.getWeight();
@@ -33,6 +32,9 @@ double Dijisktra::print_distance(unsigned source, unsigned destination) {
 
 vector<unsigned> Dijisktra::shortest_path(unsigned source, unsigned destination) {
     if(!graph->exist_airport(source) || !graph->exist_airport(destination)) {
+        return vector<unsigned>();
+    }
+    if(find(graph->get_adj_airport(source).begin(),graph->get_adj_airport(source).end(),destination) == graph->get_adj_airport(source).end()) {
         return vector<unsigned>();
     }
     unsigned start = source ;

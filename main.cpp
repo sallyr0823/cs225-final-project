@@ -105,7 +105,9 @@ int main()
             int source = 0;
             int destination;
             BFS bfs(graph);
-            while(source != -1) {
+            while(true) {
+            source = 0;
+            destination = 0;
             cout << endl;
             cout << "You can enter two airport id (0-14110 recommended) to see the route path between these two airports" << endl;
             cout << "Enter -1 to end this algorithm" << endl;
@@ -133,7 +135,11 @@ int main()
             }
             }
             cout << "The distance is: " << endl;
-            cout << bfs.print_distance(source,destination) << endl;
+            if(path.size() != 0) {
+                cout << bfs.print_distance(source,destination) <<endl;
+            } else {
+                cout << "0.0" << endl;
+            }
             }
             
         } else if (algo_choice == "dij") {
@@ -141,22 +147,25 @@ int main()
             cout << "Now it's dijkstra algorithm" << endl;
             int source = 0;
             int destination;
-            while(source != -1) {
+            while(true) {
+                //2333,3888
+                source = 0;
+                destination = 0;
                 cout<<endl;
                 cout << "You can enter two airport id (0-14110 recommended) to see the route path between these two airports" << endl;
                 cout << "Enter -1 to end this algorithm" << endl;
-            cout << endl;
-            cout << "Enter a departure airport id:" << endl;
-            cin >> source;
-            if(source == -1) {
+                cout << endl;
+                cout << "Enter a departure airport id:" << endl;
+                cin >> source;
+                if(source == -1) {
                 break;
-            }
-            cout << "Enter a destination airport id:" << endl;
-            cin >> destination;
-            cout << endl;
-            cout << "The path is:" << endl;
+                }
+                cout << "Enter a destination airport id:" << endl;
+                cin >> destination;
+                cout << endl;
+                cout << "The path is:" << endl;
             
-            Dijisktra dij(&graph);
+                Dijisktra dij(&graph);
             
             vector<unsigned> path = dij.shortest_path(source, destination);
             if(path.size() == 0) {
@@ -174,7 +183,11 @@ int main()
             }
             cout << endl;
             cout << "The distance is: " << endl;
-            cout << dij.print_distance(source,destination) << endl;
+            if(path.size() != 0) {
+                cout << dij.print_distance(source,destination) <<endl;
+            } else {
+                cout << "0.0" << endl;
+            }
             }
             
         } else if(algo_choice == "pg") {
