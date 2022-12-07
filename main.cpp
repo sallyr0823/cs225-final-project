@@ -145,10 +145,10 @@ int main()
         } else if (algo_choice == "dij") {
             cout << endl;
             cout << "Now it's dijkstra algorithm" << endl;
-            int source = 0;
+            int source;
             int destination;
+            Dijisktra dij(&graph);
             while(true) {
-                //2333,3888
                 source = 0;
                 destination = 0;
                 cout<<endl;
@@ -165,7 +165,6 @@ int main()
                 cout << endl;
                 cout << "The path is:" << endl;
             
-                Dijisktra dij(&graph);
             
             vector<unsigned> path = dij.shortest_path(source, destination);
             if(path.size() == 0) {

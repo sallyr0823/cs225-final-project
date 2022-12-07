@@ -62,7 +62,7 @@ TEST_CASE("test airport_graph") {
 
     for (unsigned i = 0; i < edge_data.size(); i++) {
         vector<string> out= split_string(edge_data[i],',');
-        if(out[3] == "\N" || out[5] == "\N") {continue;}
+        if(out[3] == "\\N" || out[5] == "\\N") {continue;}
         try {
             //cout << out[6] << endl;
             int x = stoi(out[3]);
@@ -83,7 +83,7 @@ TEST_CASE("test airport_graph") {
 
     for (unsigned i = 0; i < fake_edge_data.size(); i++) {
         vector<string> out= split_string(fake_edge_data[i],',');
-        if(out[3] == "\N" || out[5] == "\N") {continue;}
+        if(out[3] == "\\N" || out[5] == "\\N") {continue;}
         Airport source = airports[mp[stoi(out[3])]];
         Airport dest = airports[mp[stoi(out[5])]];
         
@@ -119,7 +119,7 @@ TEST_CASE("test airport_graph") {
      vector<Edge> fake_edges;
      for (unsigned i = 0; i < fake_edge_data.size(); i++) {
         vector<string> out= split_string(fake_edge_data[i],',');
-        if(out[3] == "\N" || out[5] == "\N") {continue;}
+        if(out[3] == "\\N" || out[5] == "\\N") {continue;}
         Airport source = fake_airports[mp[stoi(out[3])]];
         Airport dest = fake_airports[mp[stoi(out[5])]];
         
