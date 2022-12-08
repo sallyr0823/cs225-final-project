@@ -36,9 +36,8 @@ vector<unsigned> Dijisktra::shortest_path(unsigned source, unsigned destination)
     if(!graph.exist_airport(source) || !graph.exist_airport(destination)) {
         return vector<unsigned>();
     }
-    if(find(graph.get_adj_airport(source).begin(),graph.get_adj_airport(source).end(),destination) == graph.get_adj_airport(source).end()) {
-        return vector<unsigned>();
-    }
+    
+    
     if (!exist_route(edges_, destination)) {
         return vector<unsigned>();
     }
