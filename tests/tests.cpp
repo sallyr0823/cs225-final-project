@@ -181,17 +181,20 @@ TEST_CASE("test airport_graph") {
     }
     
   Graph graph (airports, edges);   
-  Dijisktra dij(&graph);
+  Dijisktra dij(graph);
   vector<unsigned> path ;
+  path =  dij.shortest_path(2, 4);
+  
+  REQUIRE(path.size() == 3);
+
+  REQUIRE(airports[path[0]].AirportID() == 2);
+  REQUIRE(airports[path[1]].AirportID() == 1);
+  REQUIRE(airports[path[2]].AirportID() == 4);
+
   path =  dij.shortest_path(1, 4);
+  
   REQUIRE(path.size() == 2);
+
   REQUIRE(airports[path[0]].AirportID() == 1);
   REQUIRE(airports[path[1]].AirportID() == 4);
-
-
-  /*REQUIRE(path.size() == 5);
-  REQUIRE(airports[path[1]].AirportName() == "\"Chifeng Airport\"");
-  REQUIRE(airports[path[2]].AirportName() == "\"Beijing Capital International Airport\"");
-  REQUIRE(airports[path[3]].AirportName() == "\"Lester B. Pearson International Airport\"");*/
 }
-
