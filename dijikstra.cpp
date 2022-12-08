@@ -100,12 +100,13 @@ vector<unsigned> Dijisktra::shortest_path(unsigned source, unsigned destination)
     vector<unsigned> path;
     curr = mp[dest];
     //cout << previous[curr];
-    while (curr != mp[start]) {
+    if ((int)previous[mp[curr]] != -1) {
+        while (curr != mp[start]) {
             path.push_back(curr); 
             curr = previous[curr]; 
         }
-        path.push_back(curr); 
-    
+        path.push_back(curr);
+    } 
     reverse(path.begin(), path.end()); //reverse the path 
     return path;
 }
@@ -130,4 +131,3 @@ unsigned Dijisktra::shortest_distance(vector<unsigned> que, vector<unsigned> dis
     }
     return min_index;
 }
-
