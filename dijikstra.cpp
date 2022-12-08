@@ -74,7 +74,9 @@ vector<unsigned> Dijisktra::shortest_path(unsigned source, unsigned destination)
         if (curr == dest) {
             break;
         }
-        
+        if(graph.get_adj_airport(currAirportID).size() == 0) {
+            continue;
+        }
         for (auto adj : graph.get_adj_airport(currAirportID)) {
             if(!visited[mp[adj]]) {
                 unsigned adj_dist = distances[curr] + graph.getEdge(currAirportID, adj).getWeight(); //  distance of node of current iteration from the start

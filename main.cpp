@@ -29,9 +29,9 @@ int main()
         string begin_choice;
         cout << endl;
         cout << "We have prepared datasets from OpenFlights.org with information of airports and routes" << endl;
-        cout << "If you want to continue, please enter yes. It you want to quit, please enter no." << endl;
+        cout << "If you want to continue, please enter y. It you want to quit, please enter q." << endl;
         cin >> begin_choice;
-        if(begin_choice == "yes") {
+        if(begin_choice == "y") {
             vector<string> airport = file_to_string("data/airports.txt");
             cout << airport.size();
             for (unsigned int i = 0; i < airport.size(); i++) {
@@ -59,7 +59,7 @@ int main()
             vector<string> edge_data = file_to_string("data/routes.txt");
             for (unsigned i = 0; i < edge_data.size(); i++) {
                 vector<string> out= split_string(edge_data[i],',');
-                if(out[3] == "\N" || out[5] == "\N") {continue;}
+                if(out[3] == "\\N" || out[5] == "\\N") {continue;}
                 try {
                 //cout << out[6] << endl;
                 int x = stoi(out[3]);

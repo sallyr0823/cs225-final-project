@@ -99,7 +99,7 @@ vector<unsigned> PageRank::get_airport_rank() {
 }
 
 string PageRank::print_rank(int rank) {
-    if(rank <= 0 || rank > num_) {
+    if(rank <= 0 || rank > (int)num_) {
         return "Invalid input, try again";
     }
     unsigned airportid = get_airport_rank()[rank - 1];
