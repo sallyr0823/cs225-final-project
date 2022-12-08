@@ -12,6 +12,14 @@ Dijisktra::Dijisktra(Graph graph) {
     this->graph = graph;
     
 }
+bool Dijisktra::exist_route(vector<Edge> edges_, unsigned dest) {
+    for (unsigned i = 0; i < edges_.size(); i++) {
+        if (dest == edges_[i].getDestId()) {
+            return true;
+        }
+    }
+    return false;
+}
 double Dijisktra::print_distance(unsigned source, unsigned destination) {
     vector<unsigned> path = shortest_path(source,destination);
     if(path.size() == 0) {
@@ -25,12 +33,16 @@ double Dijisktra::print_distance(unsigned source, unsigned destination) {
     return dist;
 }
 vector<unsigned> Dijisktra::shortest_path(unsigned source, unsigned destination) {
-    /*if(!graph_.exist_airport(source) || !graph_.exist_airport(destination)) {
+    if(!graph.exist_airport(source) || !graph.exist_airport(destination)) {
         return vector<unsigned>();
     }
-    if(find(graph_.get_adj_airport(source).begin(),graph_.get_adj_airport(source).end(),destination) == graph_.get_adj_airport(source).end()) {
+    if(find(graph.get_adj_airport(source).begin(),graph.get_adj_airport(source).end(),destination) == graph.get_adj_airport(source).end()) {
         return vector<unsigned>();
-    }*/
+    }
+    if (!exist_route(edges_, destination)) {
+        return vector<unsigned>();
+    }
+    
     unsigned start = source ;
     unsigned dest = destination;
     
@@ -44,7 +56,7 @@ vector<unsigned> Dijisktra::shortest_path(unsigned source, unsigned destination)
     vector<bool> visited;
     for (unsigned i = 0; i < airports_.size(); i++) {
         visited.push_back(false); 
-        distances.push_back(999999); 
+        distances.push_back(9999999); 
         previous.push_back(-1);  
         que.push_back(i);
     }
@@ -64,7 +76,7 @@ vector<unsigned> Dijisktra::shortest_path(unsigned source, unsigned destination)
             break;
         }
         
-        for (unsigned& adj : graph.get_adj_airport(currAirportID)) {
+        for (auto adj : graph.get_adj_airport(currAirportID)) {
             if(!visited[mp[adj]]) {
                 unsigned adj_dist = distances[curr] + graph.getEdge(currAirportID, adj).getWeight(); //  distance of node of current iteration from the start
                 if (adj_dist < distances[mp[adj]]) {     
@@ -76,11 +88,13 @@ vector<unsigned> Dijisktra::shortest_path(unsigned source, unsigned destination)
     }
     vector<unsigned> path;
     curr = mp[dest];
-    while (curr != mp[start]) {
-        path.push_back(curr); 
-        curr = previous[curr]; 
+    if((int)previous[mp[curr]] != -1) {
+        while (curr != mp[start]) {
+            path.push_back(curr); 
+            curr = previous[curr]; 
+        }
+        path.push_back(curr);
     }
-    path.push_back(curr); 
     reverse(path.begin(), path.end()); //reverse the path 
     return path;
 }

@@ -14,6 +14,7 @@ class Dijisktra {
 
     public:
     Dijisktra(Graph graph);
+    bool exist_route(vector<Edge> edges_, unsigned dest);
     vector<unsigned> shortest_path(unsigned source, unsigned destination);
     double print_distance(unsigned source, unsigned destination);
     unsigned shortest_distance(vector<unsigned> que, vector<unsigned> distances, vector<bool>visited);
