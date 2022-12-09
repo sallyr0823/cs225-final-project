@@ -21,32 +21,32 @@ $(EXENAME): output_msg $(OBJS)
 	$(LD) $(OBJS) $(LDFLAGS) -o $(EXENAME)
 
 
-main.o: main.cpp file_reader.h airport_graph.h edge.h airport.h
-	$(CXX) $(CXXFLAGS)  main.cpp
+main.o: src/main.cpp src/file_reader.h src/airport_graph.h src/edge.h src/airport.h
+	$(CXX) $(CXXFLAGS)  src/main.cpp
 
-file_reader.o: file_reader.cpp file_reader.h
-	$(CXX) $(CXXFLAGS) file_reader.cpp
+file_reader.o: src/file_reader.cpp src/file_reader.h
+	$(CXX) $(CXXFLAGS) src/file_reader.cpp
 
-airport_graph.o: airport_graph.cpp airport_graph.h
-	$(CXX) $(CXXFLAGS) airport_graph.cpp
+airport_graph.o: src/airport_graph.cpp src/airport_graph.h
+	$(CXX) $(CXXFLAGS) src/airport_graph.cpp
 
-edge.o: edge.cpp edge.h
-	$(CXX) $(CXXFLAGS) edge.cpp
+edge.o: src/edge.cpp src/edge.h
+	$(CXX) $(CXXFLAGS) src/edge.cpp
 
-airport.o: airport.cpp airport.h
-	$(CXX) $(CXXFLAGS) airport.cpp
+airport.o: src/airport.cpp src/airport.h
+	$(CXX) $(CXXFLAGS) src/airport.cpp
 
-dijikstra.o: dijikstra.cpp dijikstra.h
-	$(CXX) $(CXXFLAGS) dijikstra.cpp
+dijikstra.o: src/dijikstra.cpp src/dijikstra.h
+	$(CXX) $(CXXFLAGS) src/dijikstra.cpp
 
-BFS.o: BFS.cpp BFS.h
-	$(CXX) $(CXXFLAGS) BFS.cpp
+BFS.o: src/BFS.cpp src/BFS.h
+	$(CXX) $(CXXFLAGS) src/BFS.cpp
 
-pagerank.o: pagerank.cpp pagerank.h
-	$(CXX) $(CXXFLAGS) pagerank.cpp
+pagerank.o: src/pagerank.cpp src/pagerank.h
+	$(CXX) $(CXXFLAGS) src/pagerank.cpp
 
-test: output_msg tests/catch/catchmain.cpp tests/tests.cpp file_reader.cpp airport.cpp edge.cpp airport_graph.cpp pagerank.cpp dijikstra.cpp BFS.cpp
-	$(LD) tests/catch/catchmain.cpp tests/tests.cpp  file_reader.cpp airport.cpp edge.cpp airport_graph.cpp pagerank.cpp dijikstra.cpp BFS.cpp $(LDFLAGS) -o test
+test: output_msg tests/catch/catchmain.cpp tests/tests.cpp src/file_reader.cpp src/airport.cpp src/edge.cpp src/airport_graph.cpp src/pagerank.cpp src/dijikstra.cpp src/BFS.cpp
+	$(LD) tests/catch/catchmain.cpp tests/tests.cpp  src/file_reader.cpp src/airport.cpp src/edge.cpp src/airport_graph.cpp src/pagerank.cpp src/dijikstra.cpp src/BFS.cpp $(LDFLAGS) -o test
 
 clean:
 	-rm -f *.o $(EXENAME) test
