@@ -89,13 +89,13 @@ vector<unsigned> Dijisktra::shortest_path(unsigned source, unsigned destination)
     }
     vector<unsigned> path;
     curr = mp[dest];
-    if((int)previous[mp[curr]] != -1) {
+    //if((int)previous[mp[curr]] != -1) {
         while (curr != mp[start]) {
             path.push_back(curr); 
             curr = previous[curr]; 
         }
         path.push_back(curr);
-    }
+    
     reverse(path.begin(), path.end()); //reverse the path 
     return path;
 }
