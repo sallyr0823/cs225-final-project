@@ -12,8 +12,8 @@
 | Executable | main | test |
 | :---:   | :---: | :---: |
 
-## How to run the program
-- Our program is running under CS225 docker environment. You may find how to make dockerfile in this tutorial.
+## How to run the executable
+- Our program is running under CS225 docker environment. You may find how to run it in this tutorial.
 
 [Docker File On Your Own Machine](https://courses.engr.illinois.edu/cs225/fa2022/resources/own-machine/)
 
@@ -36,7 +36,10 @@ make main
  
 <img width="668" alt="image" src="https://user-images.githubusercontent.com/77268283/206890963-510e478f-1082-47bd-a4fb-c1f8ecb7707f.png">
 
-There will be guidance on each algorithm. To quit each algorithm, the user needs to enter **-1**.
+There will be guidance on each algorithm. Generally, user needs to enter the id of airport to find required results. When printing results, our program will also print the name of the airport.
+
+
+To quit each algorithm, the user needs to enter **-1**.
 
 - Program can be quitted with entering **q** after the user is quitted from algorithm with entering **-1**.
 
@@ -48,3 +51,5 @@ There will be guidance on each algorithm. To quit each algorithm, the user needs
 make test
 ./test
 ```
+## Links to our presentation
+[Youtube Video](https://www.youtube.com/watch?v=bL0Qnfx56qk&t=4s)
