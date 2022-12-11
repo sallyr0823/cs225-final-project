@@ -1,4 +1,4 @@
-#include "catch/catch.hpp"
+#include <catch2/catch_test_macros.hpp>
  #include <vector>
  #include <string>
  #include <iostream>
@@ -14,7 +14,7 @@
 
 
 TEST_CASE("test file_reader") {
-    vector<string> test_string = file_to_string("data/test_data.txt");
+    vector<string> test_string = file_to_string("../data/test_data.txt");
     REQUIRE(test_string[0] == "monday,is,1");
     REQUIRE(test_string[1] == "tuesday,is,2");
     REQUIRE(test_string[2] == "wednesday,is,3");
@@ -39,9 +39,9 @@ TEST_CASE("test airport") {
 
 TEST_CASE("test edge and airport_graph") {
 
-     vector<string> airport = file_to_string("data/airports.txt");
+     vector<string> airport = file_to_string("../data/airports.txt");
      //unsigned ID, std::string name, std::string city,std::string country, std::string IATA, std::string ICAO,double latitude, double longitude
-     vector<string> fake_airport = file_to_string("data/test_airports.txt");
+     vector<string> fake_airport = file_to_string("../data/test_airports.txt");
      vector<Airport> airports;
      vector<Airport> fake_airports;
 
@@ -74,8 +74,8 @@ TEST_CASE("test edge and airport_graph") {
 
      vector<Edge> edges;
      vector<Edge> fake_edges;
-     vector<string> edge_data = file_to_string("data/routes.txt");
-     vector<string> fake_edge_data = file_to_string("data/test_routes.txt");
+     vector<string> edge_data = file_to_string("../data/routes.txt");
+     vector<string> fake_edge_data = file_to_string("../data/test_routes.txt");
 
     for (unsigned i = 0; i < edge_data.size(); i++) {
         vector<string> out= split_string(edge_data[i],',');
@@ -105,8 +105,8 @@ TEST_CASE("test edge and airport_graph") {
         Airport dest = airports[mp[stoi(out[5])]];
         
         Edge e(source, dest);
-        REQUIRE(e.getSourceId() == stoi(out[3]));
-        REQUIRE(e.getDestId() == stoi(out[5]));
+        REQUIRE((int)e.getSourceId() == stoi(out[3]));
+        REQUIRE((int)e.getDestId() == stoi(out[5]));
         fake_edges.push_back(e);
     }
 
@@ -124,7 +124,7 @@ TEST_CASE("test edge and airport_graph") {
  }
 
  TEST_CASE("test_bfs") {
-    vector<string> fake_airport = file_to_string("data/test_airports.txt");
+    vector<string> fake_airport = file_to_string("../data/test_airports.txt");
     vector<Airport> fake_airports;
     for (unsigned int i = 0; i < fake_airport.size(); i++) {
          vector<string> out= split_string(fake_airport[i],',');
@@ -135,7 +135,7 @@ TEST_CASE("test edge and airport_graph") {
      for (unsigned int i = 0; i < fake_airport.size(); i++) {
          mp[fake_airports[i].AirportID()] = i;
      }
-     vector<string> fake_edge_data = file_to_string("data/test_routes.txt");
+     vector<string> fake_edge_data = file_to_string("../data/test_routes.txt");
      vector<Edge> fake_edges;
      for (unsigned i = 0; i < fake_edge_data.size(); i++) {
         vector<string> out= split_string(fake_edge_data[i],',');
@@ -158,7 +158,7 @@ TEST_CASE("test edge and airport_graph") {
  TEST_CASE("test dijikstra" ) {
     
     
-    vector<string> airport = file_to_string("data/test_airports.txt");
+    vector<string> airport = file_to_string("../data/test_airports.txt");
     //unsigned ID, std::string name, std::string city,std::string country, std::string IATA, std::string ICAO,double latitude, double longitude
     
     vector<Airport> airports;
@@ -185,7 +185,7 @@ TEST_CASE("test edge and airport_graph") {
 
 
     vector<Edge> edges;
-    vector<string> edge_data = file_to_string("data/test_routes.txt");
+    vector<string> edge_data = file_to_string("../data/test_routes.txt");
     for (unsigned i = 0; i < edge_data.size(); i++) {
         vector<string> out= split_string(edge_data[i],',');
         try{
@@ -221,7 +221,7 @@ TEST_CASE("test edge and airport_graph") {
 TEST_CASE("test pagerank" ) {
     
     
-    vector<string> airport = file_to_string("data/test_airports.txt");
+    vector<string> airport = file_to_string("../data/test_airports.txt");
     //unsigned ID, std::string name, std::string city,std::string country, std::string IATA, std::string ICAO,double latitude, double longitude
     
     vector<Airport> airports;
@@ -248,7 +248,7 @@ TEST_CASE("test pagerank" ) {
 
 
     vector<Edge> edges;
-    vector<string> edge_data = file_to_string("data/test_routes.txt");
+    vector<string> edge_data = file_to_string("../data/test_routes.txt");
     for (unsigned i = 0; i < edge_data.size(); i++) {
         vector<string> out= split_string(edge_data[i],',');
         try{

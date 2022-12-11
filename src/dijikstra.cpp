@@ -71,7 +71,7 @@ vector<unsigned> Dijisktra::shortest_path(unsigned source, unsigned destination)
         unsigned currAirportID = airports_[curr].AirportID();
         visited[curr] = true;
         visitedCount++;
-        if (curr == dest) {
+        if (curr == mp[dest]) {
             break;
         }
         if(graph.get_adj_airport(currAirportID).size() == 0) {
@@ -89,7 +89,6 @@ vector<unsigned> Dijisktra::shortest_path(unsigned source, unsigned destination)
     }
     vector<unsigned> path;
     curr = mp[dest];
-    //if((int)previous[mp[curr]] != -1) {
         while (curr != mp[start]) {
             path.push_back(curr); 
             curr = previous[curr]; 

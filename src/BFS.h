@@ -13,7 +13,7 @@ using namespace std;
 
 class BFS {
     public:
-        BFS(Graph graph);
+        BFS(Graph& graph);
         vector<unsigned> BFS_connected(unsigned source);
         vector<unsigned> BFS_path(unsigned source, unsigned destination);
         double print_distance(unsigned source, unsigned destination);

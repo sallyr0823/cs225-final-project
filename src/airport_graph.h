@@ -15,6 +15,7 @@ class Graph {
         Graph();
         Graph(vector<Airport> & airports, vector<Edge> & edges);
         Graph(const Graph& other);
+        const Graph& operator=(const Graph& other);
         int get_num_airports();
         vector<Airport> & get_airports();
         vector<Edge> & get_routes();

@@ -11,6 +11,7 @@
 #include <iostream>
 #include <sstream>
 #include <fstream>
+#include <algorithm>
 #include <queue>
 #include <stack>
 
@@ -59,7 +60,25 @@ Graph::Graph(const Graph& other) {
          adjlist_[source].push_back(dest);
     }
 }
+const Graph& Graph::operator=(const Graph& other) {
+    if(this == &other) {
+        return *this;
+    }
+    num_ = other.num_;
+    airports_ = other.airports_;
+    edges_ = other.edges_;
+    for(int i = 0; i < num_; i++) {
+        vector<unsigned> insert;
+        adjlist_.insert({other.airports_[i].AirportID(),insert});
+    }
+    for(unsigned j = 0; j < edges_.size();j++) {
+        unsigned source = edges_[j].getSourceId();
+        unsigned dest = edges_[j].getDestId();
+         adjlist_[source].push_back(dest);
+    }
+    return *this;
 
+}
 
 int Graph::get_num_airports() {
     return num_;
@@ -83,9 +102,9 @@ unordered_map<unsigned, vector<unsigned >>& Graph::get_adjList() {
 
 vector<unsigned> Graph::get_adj_airport(unsigned airportId) {
    
-    if(exist_airport(airportId)) {
-        // check if contains airport
-        return adjlist_[airportId];
+     unordered_map<unsigned, vector<unsigned >>::iterator it = adjlist_.find(airportId);
+     if(it != adjlist_.end()) {
+        return it->second;
      }
      return vector<unsigned>();
 }

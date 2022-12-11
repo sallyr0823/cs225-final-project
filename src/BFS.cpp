@@ -2,17 +2,19 @@
 #include "airport.h"
 #include "edge.h"
 #include <map>
+#include <algorithm>
 
 using namespace std;
 
-BFS::BFS(Graph graph) {
-    graph_ = graph;
+BFS::BFS(Graph& graph) {
+    
     num_ = graph. get_num_airports();
     airports_ = graph.get_airports();
     edges_ = graph.get_routes();
     for (unsigned i = 0; i < airports_.size(); i++) {
         mp[airports_[i].AirportID()] = i; 
     }
+    graph_ = graph;
 }
 
 vector<unsigned> BFS::BFS_connected(unsigned source) {
@@ -55,9 +57,6 @@ double BFS::print_distance(unsigned source, unsigned destination) {
 
 vector<unsigned> BFS::BFS_path(unsigned source, unsigned destination) {
     if(!graph_.exist_airport(source) || !graph_.exist_airport(destination)) {
-        return vector<unsigned>();
-    }
-    if(find(graph_.get_adj_airport(source).begin(),graph_.get_adj_airport(source).end(),destination) == graph_.get_adj_airport(source).end()) {
         return vector<unsigned>();
     }
     unsigned sour = source;

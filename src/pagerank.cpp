@@ -24,7 +24,7 @@ void PageRank::init_rank(double damp, int iteration) {
     }
     new_rank_ = rank_;
     // initialize iteration
-    double dangling_pr;
+    //double dangling_pr;
     double sum_pr;
     int count= 0;
     // (1-damp)
@@ -32,7 +32,7 @@ void PageRank::init_rank(double damp, int iteration) {
     while(stop == false && count < iteration) {
         count++;
         
-        dangling_pr = 0.0;
+        //dangling_pr = 0.0;
         sum_pr = 0.0;
 
         // normalize
