@@ -13,7 +13,7 @@ using namespace std;
 class Dijisktra {
 
     public:
-    Dijisktra(Graph graph);
+    Dijisktra(Graph& graph_);
     bool exist_route(vector<Edge> edges_, unsigned dest);
     vector<unsigned> shortest_path(unsigned source, unsigned destination);
     double print_distance(unsigned source, unsigned destination);

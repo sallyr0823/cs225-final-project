@@ -3,13 +3,13 @@
 #include <iostream>
 #include <algorithm>
 using namespace std;
-Dijisktra::Dijisktra(Graph graph) {
-    airports_ = graph.get_airports();
-    edges_ = graph.get_routes();
+Dijisktra::Dijisktra(Graph& graph_) {
+    airports_ = graph_.get_airports();
+    edges_ = graph_.get_routes();
     for (unsigned i = 0; i < airports_.size(); i++) {
         mp[airports_[i].AirportID()] = i; 
     }
-    this->graph = graph;
+    graph = graph_;
     
 }
 bool Dijisktra::exist_route(vector<Edge> edges_, unsigned dest) {
@@ -64,36 +64,38 @@ vector<unsigned> Dijisktra::shortest_path(unsigned source, unsigned destination)
     previous[mp[start]] = mp[start];
     unsigned visitedCount = 0;
     
-    unsigned curr; //ID of current airport
+    unsigned curr = mp[start]; //index of current airport
+    unsigned currAirportID = start; // id of current airport
     while (visitedCount < airports_.size()) {
         
         curr = shortest_distance(que, distances, visited);
-        unsigned currAirportID = airports_[curr].AirportID();
+        currAirportID = airports_[curr].AirportID();
         visited[curr] = true;
         visitedCount++;
         if (curr == mp[dest]) {
             break;
         }
-        if(graph.get_adj_airport(currAirportID).size() == 0) {
-            continue;
-        }
-        for (auto adj : graph.get_adj_airport(currAirportID)) {
+        for (unsigned& adj : graph.get_adj_airport(currAirportID)) {
             if(!visited[mp[adj]]) {
-                unsigned adj_dist = distances[curr] + graph.getEdge(currAirportID, adj).getWeight(); //  distance of node of current iteration from the start
-                if (adj_dist < distances[mp[adj]]) {     
+                unsigned adj_dist = distances[curr] + graph.calculateWeight(currAirportID, adj);
+                 //  distance of node of current iteration from the start
+                if (adj_dist < distances[mp[adj]]) {  
                     distances[mp[adj]] = adj_dist; 
                     previous[mp[adj]] = curr; //index
                 }
+
             }
         }
     }
     vector<unsigned> path;
-    curr = mp[dest];
-        while (curr != mp[start]) {
-            path.push_back(curr); 
-            curr = previous[curr]; 
-        }
-        path.push_back(curr);
+    if(curr != mp[dest]) {
+        return path;
+    }
+    while (curr != mp[start]) {
+        path.push_back(curr); 
+        curr = previous[curr]; 
+    }
+    path.push_back(curr);
     
     reverse(path.begin(), path.end()); //reverse the path 
     return path;

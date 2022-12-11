@@ -84,6 +84,7 @@ int main()
             
                 Edge e(source, dest);
                 edges.push_back(e);
+                
             }
             dataset_exist = true;
         } else if(begin_choice == "q") {
@@ -92,6 +93,7 @@ int main()
             cout << "Invalid input! Please try again." << endl;
         }
     }
+    Graph graph(airports,edges);
     string algo_choice;
     cout << endl;
     cout << "We have prepared several algorithms." << endl;
@@ -103,7 +105,6 @@ int main()
     cout << "If you want to quit, please enter q" << endl;
     cout << endl;
     while(status) {
-        Graph graph(airports,edges);
         string algo_choice;
         cout << "Please enter an algorithm name or enter q to quit" << endl;
         cin >> algo_choice;
