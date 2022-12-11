@@ -111,7 +111,7 @@ string PageRank::print_rank(int rank) {
 
 void PageRank::store_pagerank() {
     std::ofstream page;
-    page.open("pagerank_output/pagerank.txt");
+    page.open("../pagerank_output/pagerank.txt");
     vector<double> app_rank = rank_;
     sort(app_rank.begin(),app_rank.end());
     reverse(app_rank.begin(),app_rank.end());

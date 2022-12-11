@@ -102,9 +102,9 @@ unordered_map<unsigned, vector<unsigned >>& Graph::get_adjList() {
 
 vector<unsigned> Graph::get_adj_airport(unsigned airportId) {
    
-     unordered_map<unsigned, vector<unsigned >>::iterator it = adjlist_.find(airportId);
-     if(it != adjlist_.end()) {
-        return it->second;
+     if(exist_airport(airportId)) {
+        // check if contains airport
+        return adjlist_[airportId];
      }
      return vector<unsigned>();
 }
@@ -119,17 +119,34 @@ bool Graph::exist_airport(unsigned airportId) {
     return false;
 }
 
-Edge Graph::getEdge(unsigned source, unsigned destination) {
-    if(!exist_airport(source) || !exist_airport(destination)) {
-        return Edge();
+
+
+double Graph::calculateWeight(unsigned source, unsigned destination) {
+    // consider source to be class object
+    Airport sour;
+    Airport dest;
+    for (int i = 0; i < num_; i++) {
+        if (source == airports_[i].AirportID()) {
+            sour = airports_[i];
+        }
+        if (destination == airports_[i].AirportID()) {
+            dest = airports_[i];
+        }
     }
-    vector<unsigned> adj = get_adj_airport(source);
-    if(find(adj.begin(),adj.end(),destination) != adj.end()) { 
-        Airport s = airports_[mp[source]];
-        Airport d = airports_[mp[destination]];
-        
-        return Edge(s,d);
+    if(sour.AirportID() == 0 || dest.AirportID() == 0) {
+        return 0.0;
     }
-    return Edge();
     
+    std::pair<double,double> loc1 = sour.AirportLocation();
+    std::pair<double,double> loc2 = dest.AirportLocation();
+    //https://www.movable-type.co.uk/scripts/latlong.html
+    const double R = 6371;
+    double phi1 = loc1.first * M_PI / 180;
+    double phi2 = loc2.first * M_PI /180;
+    double delta_phi = (loc2.first-loc1.first) * M_PI / 180;
+    double delta_lam = (loc2.second - loc1.second) * M_PI / 180;
+    double a =  sin(delta_phi / 2) * sin(delta_phi / 2) + cos(phi1)*cos(phi2)*sin(delta_lam/2)*sin(delta_lam/2);
+    double c = 2*atan2(sqrt(a),sqrt(1-a));
+    double d = R*c;
+    return d;
 }

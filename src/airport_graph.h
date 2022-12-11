@@ -22,7 +22,7 @@ class Graph {
         map<unsigned, unsigned> get_index_map();
         unordered_map<unsigned, vector<unsigned >>& get_adjList();
         vector<unsigned> get_adj_airport(unsigned airportId);
-        Edge getEdge(unsigned source, unsigned destination);
+        double calculateWeight(unsigned source, unsigned destination);
         bool exist_airport(unsigned airportId);
 
     private:
