@@ -13,7 +13,7 @@
 | :---:   | :---: | :---: |
 
 ## How to run the executable
-- Our program is running under CS225 docker environment. You may find how to run it in this tutorial.
+- Our program is running under CS225 docker environment. You may find guidance on setting it up it in this tutorial.
 
 [Docker File On Your Own Machine](https://courses.engr.illinois.edu/cs225/fa2022/resources/own-machine/)
 
