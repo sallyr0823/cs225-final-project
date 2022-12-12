@@ -11,6 +11,7 @@
 
 | Executable | main | test |
 | :---:   | :---: | :---: |
+| | An execuatble for running all algorithms | An execuatble for running test cases|
 
 ## How to run the executable
 - Our program is running under CS225 docker environment. You may find guidance on setting it up it in this tutorial.
