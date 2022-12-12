@@ -1,2 +1,0 @@
-/usr/bin/ar qc libsrc.a CMakeFiles/src.dir/BFS.cpp.o CMakeFiles/src.dir/airport.cpp.o CMakeFiles/src.dir/airport_graph.cpp.o CMakeFiles/src.dir/dijikstra.cpp.o CMakeFiles/src.dir/edge.cpp.o CMakeFiles/src.dir/file_reader.cpp.o CMakeFiles/src.dir/pagerank.cpp.o
-/usr/bin/ranlib libsrc.a
