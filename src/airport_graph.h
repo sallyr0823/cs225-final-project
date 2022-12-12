@@ -26,7 +26,7 @@ class Graph {
         bool exist_airport(unsigned airportId);
 
     private:
-        int num_;
+        size_t num_;
         vector<Airport> airports_;
         vector<Edge> edges_;
         unordered_map<unsigned, vector<unsigned >> adjlist_;
