@@ -16,7 +16,6 @@ Edge::Edge(Airport s, Airport d){
 };
 
 
-
 unsigned Edge::getSourceId() {
     return source.AirportID();
 }

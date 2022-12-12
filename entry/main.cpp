@@ -64,8 +64,8 @@ int main()
             for (unsigned i = 0; i < edge_data.size(); i++) {
                 vector<string> out= split_string(edge_data[i],',');
                 if(out[3] == "\\N" || out[5] == "\\N") {continue;}
-                int x;
-                int y;
+                unsigned x;
+                unsigned y;
                 try {
                 //cout << out[6] << endl;
                 x = stoul(out[3]);

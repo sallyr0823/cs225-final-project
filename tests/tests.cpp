@@ -57,6 +57,7 @@ TEST_CASE("test edge and airport_graph") {
          Airport a(stoul(out[0]),out[1],out[2],out[3],out[4],out[5], stod(out[6]),stod(out[7]));
          airports.push_back(a);
      }
+     cout << airports.size() << endl;
      for (unsigned int i = 0; i < fake_airport.size(); i++) {
          vector<string> out= split_string(fake_airport[i],',');
          Airport a(stoul(out[0]),out[1],out[2],out[3],out[4],out[5], stod(out[6]),stod(out[7]));
@@ -80,23 +81,28 @@ TEST_CASE("test edge and airport_graph") {
     for (unsigned i = 0; i < edge_data.size(); i++) {
         vector<string> out= split_string(edge_data[i],',');
         if(out[3] == "\\N" || out[5] == "\\N") {continue;}
+        unsigned x;
+        unsigned y;
         try {
             //cout << out[6] << endl;
-            int x = stoi(out[3]);
-            int y = stoi(out[5]);
+            x = stoi(out[3]);
+            y = stoi(out[5]);
             
         } catch(...) {
             continue;
         }
-        if(mp.find(stoi(out[3])) == mp.end() || mp.find(stoi(out[5])) == mp.end()) {
+        x = stoul(out[3]);
+        y = stoul(out[5]);
+        if(mp.find(x) == mp.end() || mp.find(y) == mp.end()) {
             continue;
         }
-        Airport source = airports[mp[stoi(out[3])]];
-        Airport dest = airports[mp[stoi(out[5])]];
+        Airport source = airports[mp[x]];
+        Airport dest = airports[mp[y]];
         
         Edge e(source, dest);
         edges.push_back(e);
     }
+    cout << edges.size() << endl;
 
     for (unsigned i = 0; i < fake_edge_data.size(); i++) {
         vector<string> out= split_string(fake_edge_data[i],',');
@@ -117,10 +123,15 @@ TEST_CASE("test edge and airport_graph") {
    REQUIRE(graph.exist_airport(2290));
    REQUIRE(!graph.exist_airport(413434234));
    Edge e;
-   Edge to_test = fake_graph.getEdge(3,4);
+   //Edge to_test = fake_graph.getEdge(3,4);
    REQUIRE(fake_graph.get_adj_airport(3).size() == 1);
    REQUIRE(fake_graph.get_adj_airport(-1).size() == 0);
-   REQUIRE(to_test.getSourceId() == 3);
+   //REQUIRE(to_test.getSourceId() == 3);
+   cout << "edge test may take a long time" << endl;
+   BFS bfs(graph);
+   for(unsigned i = 24535; i < 30000; i++) {
+    REQUIRE(bfs.BFS_path(edges[i].getSourceId(),edges[i].getDestId()).size() != 0);
+   }
  }
 
  TEST_CASE("test_bfs") {

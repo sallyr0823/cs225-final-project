@@ -11,6 +11,7 @@ class Edge {
         Edge();
         //constructor without given weight
         Edge(Airport s, Airport d);
+        Edge(unsigned s, unsigned d);
 
         //get 
 

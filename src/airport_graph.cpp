@@ -29,7 +29,7 @@ Graph::Graph(vector<Airport> & airports, vector<Edge> & edges) {
     edges_ = edges;
     num_ = airports.size();
     
-    for(int i = 0; i < num_;i++) {
+    for(size_t i = 0; i < num_;i++) {
         vector<unsigned> insert;
         adjlist_.insert({airports_[i].AirportID(),insert});
         mp[airports_[i].AirportID()] = i;
@@ -50,7 +50,7 @@ Graph::Graph(const Graph& other) {
     num_ = other.num_;
     airports_ = other.airports_;
     edges_ = other.edges_;
-    for(int i = 0; i < num_; i++) {
+    for(size_t i = 0; i < num_; i++) {
         vector<unsigned> insert;
         adjlist_.insert({other.airports_[i].AirportID(),insert});
     }
@@ -67,7 +67,7 @@ const Graph& Graph::operator=(const Graph& other) {
     num_ = other.num_;
     airports_ = other.airports_;
     edges_ = other.edges_;
-    for(int i = 0; i < num_; i++) {
+    for(size_t i = 0; i < num_; i++) {
         vector<unsigned> insert;
         adjlist_.insert({other.airports_[i].AirportID(),insert});
     }
@@ -111,7 +111,7 @@ vector<unsigned> Graph::get_adj_airport(unsigned airportId) {
 
 
 bool Graph::exist_airport(unsigned airportId) {
-    for (int i = 0; i < num_; i++) {
+    for (size_t i = 0; i < num_; i++) {
         if (airportId == airports_[i].AirportID()) {
             return true;
         }
@@ -125,7 +125,7 @@ double Graph::calculateWeight(unsigned source, unsigned destination) {
     // consider source to be class object
     Airport sour;
     Airport dest;
-    for (int i = 0; i < num_; i++) {
+    for (size_t i = 0; i < num_; i++) {
         if (source == airports_[i].AirportID()) {
             sour = airports_[i];
         }
